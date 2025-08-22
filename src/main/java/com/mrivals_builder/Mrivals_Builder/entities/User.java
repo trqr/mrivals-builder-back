@@ -20,7 +20,7 @@ public class User {
     private String password;
     private String role;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     private List<Compo> compos;
 
 }
