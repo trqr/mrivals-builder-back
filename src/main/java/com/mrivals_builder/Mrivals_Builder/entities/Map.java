@@ -1,9 +1,7 @@
 package com.mrivals_builder.Mrivals_Builder.entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +15,9 @@ import java.util.List;
 public class Map {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Long externalId;
     private String name;
     private String fullName;
     private String location;
