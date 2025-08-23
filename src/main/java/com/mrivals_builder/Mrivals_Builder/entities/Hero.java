@@ -32,7 +32,7 @@ public class Hero {
     private double winRate;
 
     @OneToMany(mappedBy = "hero")
-    @JsonBackReference
+    @JsonManagedReference
     private List<Ability> abilities;
 
     @OneToMany(mappedBy = "hero")

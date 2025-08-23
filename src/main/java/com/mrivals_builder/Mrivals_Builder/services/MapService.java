@@ -2,6 +2,7 @@ package com.mrivals_builder.Mrivals_Builder.services;
 
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.MapExternalApiDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.Map;
+import com.mrivals_builder.Mrivals_Builder.entities.MapImage;
 import com.mrivals_builder.Mrivals_Builder.mappers.MapMapper;
 import com.mrivals_builder.Mrivals_Builder.repositories.MapImageRepository;
 import com.mrivals_builder.Mrivals_Builder.repositories.MapRepository;
@@ -25,7 +26,7 @@ public class MapService {
     @Autowired
     private MapMapper mapMapper;
 
-    public List<Map> getAllMaps() {
+    public List<Map> getAllMapsFromApi() {
         List<MapExternalApiDTO> dtos = extApiService.getMapsFromApi();
 
         List<Map> maps = dtos.stream()
@@ -34,12 +35,17 @@ public class MapService {
                             .orElseGet(Map::new);
 
                     Map saved = mapRepository.save(mapMapper.mapToEntity(dto, map));
-                    mapImageRepository.saveAll(saved.getMapImages());
+                    List<MapImage> images = mapMapper.dtoToMapImage(dto, saved);
+                    mapImageRepository.saveAll(images);
 
                     return saved;
                 })
                 .toList();
 
         return maps;
+    }
+
+    public List<Map> getAllMaps() {
+        return mapRepository.findAll();
     }
 }

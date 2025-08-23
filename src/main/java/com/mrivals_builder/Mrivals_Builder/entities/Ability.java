@@ -1,5 +1,6 @@
 package com.mrivals_builder.Mrivals_Builder.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -27,6 +28,6 @@ public class Ability {
 
     @ManyToOne
     @JoinColumn(name = "hero_id")
-    @JsonManagedReference
+    @JsonBackReference
     private Hero hero;
 }

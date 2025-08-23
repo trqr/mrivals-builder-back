@@ -2,6 +2,7 @@ package com.mrivals_builder.Mrivals_Builder.services;
 
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroExternalApiDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.ListedHero;
+import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.MapApiResponse;
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.MapExternalApiDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -68,13 +69,13 @@ public class ExternalApiService {
 
         HttpEntity<Void> entity = new HttpEntity<>(headers);
 
-        ResponseEntity<List<MapExternalApiDTO>> response = restTemplate.exchange(
+        ResponseEntity<MapApiResponse> response = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
                 entity,
-                new ParameterizedTypeReference<List<MapExternalApiDTO>>() {}
+                MapApiResponse.class
         );
 
-        return response.getBody();
+        return response.getBody().getMaps();
     }
 }

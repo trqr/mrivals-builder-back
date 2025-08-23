@@ -20,6 +20,11 @@ public class MapController {
     private MapService mapService;
 
     @GetMapping
+    public ResponseEntity<List<Map>> fetchAllMapsFromApi(){
+        return new ResponseEntity<>(mapService.getAllMapsFromApi(), HttpStatus.OK);
+    }
+
+    @GetMapping("/all")
     public ResponseEntity<List<Map>> getAllMaps(){
         return new ResponseEntity<>(mapService.getAllMaps(), HttpStatus.OK);
     }

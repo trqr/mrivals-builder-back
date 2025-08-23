@@ -27,6 +27,10 @@ public class MapMapper {
         map.setCompetitive(dto.isCompetitive());
         map.setVideoLink(dto.getVideo());
 
+        return map;
+    }
+
+    public List<MapImage> dtoToMapImage(MapExternalApiDTO dto, Map map) {
         List<MapImage> images = dto.getImages().stream()
                 .map(imgUrl -> {
                     MapImage mapImage = mapImageRepository.findByImageLinkAndMap(imgUrl, map)
@@ -39,7 +43,6 @@ public class MapMapper {
                 .toList();
 
         map.setMapImages(images);
-
-        return map;
+        return images;
     }
 }
