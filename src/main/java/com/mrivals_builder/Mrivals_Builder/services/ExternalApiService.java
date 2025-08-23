@@ -2,6 +2,7 @@ package com.mrivals_builder.Mrivals_Builder.services;
 
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroExternalApiDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.ListedHero;
+import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.MapExternalApiDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -38,11 +39,13 @@ public class ExternalApiService {
                 entity,
                 new ParameterizedTypeReference<List<ListedHero>>() {}
         );
+
         return response.getBody();
     }
 
+
     public HeroExternalApiDTO getHeroFromApi(Long heroId) {
-        String url = baseUrl + "heroes/hero/" + heroId;
+        String url = baseUrl + "/heroes/hero/" + heroId;
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("x-api-key", apiKey);
@@ -54,6 +57,22 @@ public class ExternalApiService {
                 HttpMethod.GET,
                 entity,
                 HeroExternalApiDTO.class
+        );
+        return response.getBody();
+    }
+
+    public List<MapExternalApiDTO> getMapsFromApi(){
+        String url = baseUrl + "/maps";
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("x-api-key", apiKey);
+
+        HttpEntity<Void> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<List<MapExternalApiDTO>> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                new ParameterizedTypeReference<List<MapExternalApiDTO>>() {}
         );
 
         return response.getBody();

@@ -27,7 +27,12 @@ public class HeroController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ListedHero>> getAllHeroesFromApi(){
+    public ResponseEntity<List<Hero>> getAllHeroesFromApi(){
         return new ResponseEntity<>(heroService.getAllHeroesFromApi(), HttpStatus.OK);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Hero>> getAllHeroes(){
+        return new ResponseEntity<>(heroService.getAllHeroes(), HttpStatus.OK);
     }
 }

@@ -31,7 +31,7 @@ public class HeroMapper {
 
         List<Ability> abilities = dto.getAbilities().stream()
                 .map(abilityDto ->  {
-                        Ability ability = abilityRepository.findByExternalId(abilityDto.getId())
+                        Ability ability = abilityRepository.findAllByExternalId(abilityDto.getId()).stream().findFirst()
                         .orElseGet(Ability::new);
 
         return mapAbilityToEntity(abilityDto, ability, hero);

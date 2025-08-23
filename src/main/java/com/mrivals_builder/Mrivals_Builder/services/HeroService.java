@@ -36,7 +36,15 @@ public class HeroService {
         return saved;
     }
 
-    public List<ListedHero> getAllHeroesFromApi() {
-        return externalApiService.getHeroListFromApi();
+    public List<Hero> getAllHeroesFromApi() {
+        List<ListedHero> heroList = externalApiService.getHeroListFromApi();
+
+        return heroList.stream()
+                .map(listedHero -> saveFetchedHeroToEntity(listedHero.getId()))
+                .toList();
+    }
+
+    public List<Hero> getAllHeroes(){
+        return heroRepository.findAll();
     }
 }

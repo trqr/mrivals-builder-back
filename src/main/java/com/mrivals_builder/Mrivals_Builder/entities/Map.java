@@ -23,7 +23,7 @@ public class Map {
     private String location;
     private String description;
     private String gameMode;
-    private boolean isCompetitive;
+    private boolean competitive;
     private String videoLink;
 
     @OneToMany(mappedBy = "map")

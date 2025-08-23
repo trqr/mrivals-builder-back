@@ -1,19 +1,24 @@
 package com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AbilityExternalApiDTO {
+public class MapExternalApiDTO {
+
     private Long id;
     private String name;
-    private String type;
-    @JsonProperty("isCollab")
-    private boolean collab;
+    private String fullName;
+    private String location;
     private String description;
-    private String icon;
+    private String gameMode;
+    private boolean competitive;
+    private String video;
+    private List<String> images;
 }

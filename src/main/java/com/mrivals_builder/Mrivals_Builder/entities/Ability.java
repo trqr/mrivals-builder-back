@@ -1,7 +1,7 @@
 package com.mrivals_builder.Mrivals_Builder.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,7 +19,8 @@ public class Ability {
     private Long externalId;
     private String name;
     private String type;
-    private boolean isCollab;
+    @JsonProperty("isCollab")
+    private boolean collab;
     @Column(columnDefinition = "TEXT")
     private String description;
     private String icon;
