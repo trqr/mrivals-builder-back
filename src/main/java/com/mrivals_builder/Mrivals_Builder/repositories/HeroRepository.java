@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface HeroRepository extends JpaRepository<Hero, Long> {
     Optional<Hero> findByExternalId(Long externalId);
 
+    boolean existsByExternalId(Long externalId);
+
 }

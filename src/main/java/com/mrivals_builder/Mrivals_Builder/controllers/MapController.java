@@ -19,12 +19,12 @@ public class MapController {
     @Autowired
     private MapService mapService;
 
-    @GetMapping
+    @GetMapping("/update")
     public ResponseEntity<List<Map>> fetchAllMapsFromApi(){
         return new ResponseEntity<>(mapService.getAllMapsFromApi(), HttpStatus.OK);
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<Map>> getAllMaps(){
         return new ResponseEntity<>(mapService.getAllMaps(), HttpStatus.OK);
     }

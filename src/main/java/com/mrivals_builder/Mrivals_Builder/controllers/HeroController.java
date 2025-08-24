@@ -23,15 +23,15 @@ public class HeroController {
     @GetMapping("/{heroId}")
     public ResponseEntity<Hero> fetchHeroFromExtApi(@PathVariable Long heroId){
         System.out.println("Fetching hero "+ heroId + " from external api");
-        return new ResponseEntity<>(heroService.saveFetchedHeroToEntity(heroId), HttpStatus.CREATED);
+        return new ResponseEntity<>(heroService.getOrUpdateHeroData(heroId), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/update")
+    public ResponseEntity<List<Hero>> getAllHeroesFromApi(){
+        return new ResponseEntity<>(heroService.getOrUpdateAllHeroData(), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<Hero>> getAllHeroesFromApi(){
-        return new ResponseEntity<>(heroService.getAllHeroesFromApi(), HttpStatus.OK);
-    }
-
-    @GetMapping("/all")
     public ResponseEntity<List<Hero>> getAllHeroes(){
         return new ResponseEntity<>(heroService.getAllHeroes(), HttpStatus.OK);
     }

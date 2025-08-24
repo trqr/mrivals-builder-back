@@ -18,7 +18,9 @@ public class HeroMapper {
     @Autowired
     private AbilityRepository abilityRepository;
 
-    public Hero mapToEntity(HeroExternalApiDTO dto, Hero hero) {
+    public Hero mapToEntity(HeroExternalApiDTO dto) {
+
+        Hero hero = new Hero();
 
         hero.setExternalId(dto.getId());
         hero.setName(dto.getName());

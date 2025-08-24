@@ -1,6 +1,7 @@
 package com.mrivals_builder.Mrivals_Builder.services;
 
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroExternalApiDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroStatsExternalApiDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.ListedHero;
 import com.mrivals_builder.Mrivals_Builder.entities.Hero;
 import com.mrivals_builder.Mrivals_Builder.mappers.HeroMapper;
@@ -9,6 +10,7 @@ import com.mrivals_builder.Mrivals_Builder.repositories.HeroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,28 +25,50 @@ public class HeroService {
     @Autowired
     private HeroMapper heroMapper;
 
-    public Hero saveFetchedHeroToEntity(Long heroId){
+    public Hero getOrUpdateHeroData(Long heroId){
 
-        HeroExternalApiDTO fetchedDTO = externalApiService.getHeroFromApi(heroId);
+
+        if (!heroRepository.existsByExternalId(heroId)) {
+            HeroExternalApiDTO fetchedDTO = externalApiService.getHeroFromApi(heroId);
+
+            Hero created = heroMapper.mapToEntity(fetchedDTO);
+            updateStats(created);
+            Hero saved = heroRepository.save(created);
+            abilityRepository.saveAll(saved.getAbilities());
+
+            return saved;
+        }
 
         Hero hero = heroRepository.findByExternalId(heroId)
-                .orElseGet( () -> new Hero());
+                .orElseThrow(() -> new RuntimeException("Hero with id " + heroId + " not found"));
 
-        Hero saved = heroRepository.save(heroMapper.mapToEntity(fetchedDTO, hero));
-        abilityRepository.saveAll(saved.getAbilities());
-
-        return saved;
+        return updateStats(hero);
     }
 
-    public List<Hero> getAllHeroesFromApi() {
+    public List<Hero> getOrUpdateAllHeroData() {
         List<ListedHero> heroList = externalApiService.getHeroListFromApi();
 
-        return heroList.stream()
-                .map(listedHero -> saveFetchedHeroToEntity(listedHero.getId()))
-                .toList();
+        List<Hero> heroes = new ArrayList<>();
+
+        for (ListedHero listedHero : heroList) {
+            heroes.add(getOrUpdateHeroData(listedHero.getId()));
+        }
+
+        return heroes;
     }
 
     public List<Hero> getAllHeroes(){
         return heroRepository.findAll();
     }
+
+    private Hero updateStats(Hero hero){
+        HeroStatsExternalApiDTO heroStatsDto = externalApiService.getHeroStatsFromApi(hero.getExternalId());
+
+        double winRate = (double) heroStatsDto.getWins() / heroStatsDto.getMatches();
+
+        hero.setWinRate(winRate);
+
+        return hero;
+    }
+
 }

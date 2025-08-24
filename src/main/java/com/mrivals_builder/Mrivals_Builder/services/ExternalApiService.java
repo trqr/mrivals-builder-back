@@ -1,9 +1,6 @@
 package com.mrivals_builder.Mrivals_Builder.services;
 
-import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroExternalApiDTO;
-import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.ListedHero;
-import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.MapApiResponse;
-import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.MapExternalApiDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -12,6 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -60,6 +58,30 @@ public class ExternalApiService {
                 HeroExternalApiDTO.class
         );
         return response.getBody();
+    }
+
+    public HeroStatsExternalApiDTO getHeroStatsFromApi(Long heroId) {
+        String url = baseUrl + "/heroes/hero/" + heroId + "/stats";
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("x-api-key", apiKey);
+        HttpEntity<Void> entity = new HttpEntity<>(headers);
+
+        int retries = 0;
+        while (true) {
+            try {
+                ResponseEntity<HeroStatsExternalApiDTO> response = restTemplate.exchange(
+                        url, HttpMethod.GET, entity, HeroStatsExternalApiDTO.class);
+                return response.getBody();
+            } catch (HttpClientErrorException.TooManyRequests e) {
+                retries++;
+                if (retries > 5) throw e;
+                try {
+                    Thread.sleep(1000 * retries); // backoff exponentiel : 1s, 2s, 3s…
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        }
     }
 
     public List<MapExternalApiDTO> getMapsFromApi(){
