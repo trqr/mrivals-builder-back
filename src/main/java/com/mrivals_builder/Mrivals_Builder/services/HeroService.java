@@ -4,7 +4,7 @@ import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroExternalApiD
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroStatsExternalApiDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.ListedHero;
 import com.mrivals_builder.Mrivals_Builder.entities.Hero;
-import com.mrivals_builder.Mrivals_Builder.exceptions.HeroNotFoundException;
+import com.mrivals_builder.Mrivals_Builder.exceptions.NotFoundException;
 import com.mrivals_builder.Mrivals_Builder.mappers.HeroMapper;
 import com.mrivals_builder.Mrivals_Builder.repositories.AbilityRepository;
 import com.mrivals_builder.Mrivals_Builder.repositories.HeroRepository;
@@ -74,6 +74,6 @@ public class HeroService {
 
     public Hero getHeroById(Long heroId) {
         return heroRepository.findById(heroId)
-                .orElseThrow(() -> new HeroNotFoundException("Hero with id " + heroId + " not found"));
+                .orElseThrow(() -> new NotFoundException("Hero with id " + heroId + " not found"));
     }
 }

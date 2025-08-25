@@ -76,7 +76,7 @@ public class ExternalApiService {
                 retries++;
                 if (retries > 5) throw e;
                 try {
-                    Thread.sleep(1000 * retries); // backoff exponentiel : 1s, 2s, 3s…
+                    Thread.sleep(1000 * retries);
                 } catch (InterruptedException ie) {
                     Thread.currentThread().interrupt();
                 }
