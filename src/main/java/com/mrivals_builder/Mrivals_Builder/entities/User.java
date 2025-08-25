@@ -17,8 +17,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
+    private String email;
     private String password;
-    private String role;
+    private String role = "USER";
 
     @OneToMany(mappedBy = "user")
     private List<Compo> compos;
