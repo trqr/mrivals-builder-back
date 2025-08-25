@@ -1,0 +1,32 @@
+package com.mrivals_builder.Mrivals_Builder.controllers;
+
+import com.mrivals_builder.Mrivals_Builder.dtos.CompoDTOs.BestWinRateByRoleDTO;
+import com.mrivals_builder.Mrivals_Builder.entities.Compo;
+import com.mrivals_builder.Mrivals_Builder.services.CompoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
+import java.util.List;
+
+@RestController
+@RequestMapping("/compo")
+public class CompoController {
+
+    @Autowired
+    private CompoService compoService;
+
+    @PostMapping("/create")
+    public ResponseEntity<Compo> createCompo(Principal principal){
+        return new ResponseEntity<>(compoService.create(principal), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/bestWinRateByRole/{compoId}")
+    public ResponseEntity<List<BestWinRateByRoleDTO>> getBestWinRateByRole(@PathVariable Long compoId){
+        return new ResponseEntity<>(compoService.getBestWinRateByRole(compoId), HttpStatus.OK);
+    }
+
+
+}

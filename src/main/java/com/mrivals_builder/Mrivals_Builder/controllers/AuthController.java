@@ -1,7 +1,8 @@
 package com.mrivals_builder.Mrivals_Builder.controllers;
 
-import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.AuthDTOs.RegisterRequestDTO;
-import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.AuthDTOs.RegisterResponseDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs.LoginRequestDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs.RegisterRequestDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs.RegisterResponseDTO;
 import com.mrivals_builder.Mrivals_Builder.services.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,10 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<RegisterResponseDTO> register(@Valid @RequestBody RegisterRequestDTO request){
         return new ResponseEntity<>(authService.register(request), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<RegisterResponseDTO> login(@Valid @RequestBody LoginRequestDTO request){
+        return new ResponseEntity<>(authService.login(request.getEmail(), request.getPassword()), HttpStatus.OK);
     }
 }

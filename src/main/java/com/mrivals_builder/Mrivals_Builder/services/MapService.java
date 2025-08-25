@@ -3,6 +3,7 @@ package com.mrivals_builder.Mrivals_Builder.services;
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.MapExternalApiDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.Map;
 import com.mrivals_builder.Mrivals_Builder.entities.MapImage;
+import com.mrivals_builder.Mrivals_Builder.exceptions.NotFoundException;
 import com.mrivals_builder.Mrivals_Builder.mappers.MapMapper;
 import com.mrivals_builder.Mrivals_Builder.repositories.MapImageRepository;
 import com.mrivals_builder.Mrivals_Builder.repositories.MapRepository;
@@ -51,6 +52,6 @@ public class MapService {
 
     public Map getMapById(Long mapId) {
         return mapRepository.findById(mapId)
-                .orElseThrow(() -> new HeroNotFoundException("Map with id " + mapId + " not found"));
+                .orElseThrow(() -> new NotFoundException("Map with id " + mapId + " not found"));
     }
 }

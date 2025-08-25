@@ -17,7 +17,7 @@ public class Compo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDate createdDate;
+    private LocalDate createdDate = LocalDate.now();
 
     @ManyToMany
     private List<Hero> heroes;

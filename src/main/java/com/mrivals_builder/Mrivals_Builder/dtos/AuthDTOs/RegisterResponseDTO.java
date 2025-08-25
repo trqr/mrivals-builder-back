@@ -1,4 +1,4 @@
-package com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.AuthDTOs;
+package com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

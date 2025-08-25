@@ -1,8 +1,8 @@
 package com.mrivals_builder.Mrivals_Builder.services;
 
-import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.AuthDTOs.RegisterRequestDTO;
-import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.AuthDTOs.RegisterResponseDTO;
-import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.AuthDTOs.UserDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs.RegisterRequestDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs.RegisterResponseDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs.UserDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.User;
 import com.mrivals_builder.Mrivals_Builder.exceptions.NotFoundException;
 import com.mrivals_builder.Mrivals_Builder.repositories.UserRepository;
@@ -48,6 +48,14 @@ public class AuthService {
     public RegisterResponseDTO login(String email, String password){
         if (!userRepository.existsByEmail(email)){
             throw new NotFoundException("Email not found");
+        }
+
+        User user = userRepository.findByEmail(email);
+        if (!passwordEncoder.matches(password, user.getPassword())){
+            throw new RuntimeException("Invalid password");
+        } else {
+            String token = jwtUtil.generateToken(email, user.getRole());
+            return new RegisterResponseDTO(token, new UserDTO(user));
         }
     }
 }
