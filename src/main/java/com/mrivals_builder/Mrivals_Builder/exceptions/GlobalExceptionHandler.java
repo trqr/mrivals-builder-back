@@ -22,4 +22,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleBadRequestException(BadRequestException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(InternalServerError.class)
+    public ResponseEntity<?> handleInternalServerError(InternalServerError ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
