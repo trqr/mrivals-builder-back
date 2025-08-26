@@ -47,12 +47,12 @@ public class AuthService {
 
     public RegisterResponseDTO login(String email, String password){
         if (!userRepository.existsByEmail(email)){
-            throw new NotFoundException("Email not found");
+            throw new NotFoundException("Email or password is incorrect. Please try again.");
         }
 
         User user = userRepository.findByEmail(email);
         if (!passwordEncoder.matches(password, user.getPassword())){
-            throw new RuntimeException("Invalid password");
+            throw new RuntimeException("Email or password is incorrect. Please try again.");
         } else {
             String token = jwtUtil.generateToken(email, user.getRole());
             return new RegisterResponseDTO(token, new UserDTO(user));
