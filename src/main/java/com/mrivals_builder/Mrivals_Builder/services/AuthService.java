@@ -31,6 +31,7 @@ public class AuthService {
 
         User created = new User();
         created.setEmail(request.getEmail());
+        created.setMrivalsAccount(request.getMrivalsAccount());
         created.setUsername(request.getUsername());
         created.setPassword(encryptedPassword);
         User saved = userRepository.save(created);
