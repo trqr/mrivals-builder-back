@@ -5,6 +5,7 @@ import com.mrivals_builder.Mrivals_Builder.entities.Compo;
 import com.mrivals_builder.Mrivals_Builder.entities.Hero;
 import com.mrivals_builder.Mrivals_Builder.exceptions.NotFoundException;
 import com.mrivals_builder.Mrivals_Builder.repositories.CompoRepository;
+import com.mrivals_builder.Mrivals_Builder.repositories.HeroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,12 +25,16 @@ public class CompoService {
     @Autowired
     private CompoRepository compoRepository;
 
-    public List<BestWinRateByRoleDTO> getBestWinRateByRole(Long compoId){
+    @Autowired
+    private HeroRepository heroRepository;
 
-        Compo compo = compoRepository.findById(compoId)
-                .orElseThrow(() -> new NotFoundException("Compo with id " + compoId + " not found"));
+    public List<BestWinRateByRoleDTO> getBestWinRateByRole(List<Long> heroesIds){
 
-        List<Hero> compoHeroes = compo.getHeroes();
+      //  Compo compo = compoRepository.findById(compoId)
+       //         .orElseThrow(() -> new NotFoundException("Compo with id " + compoId + " not found"));
+
+      //  List<Hero> compoHeroes = compo.getHeroes();
+        List<Hero> compoHeroes = heroRepository.findAllById(heroesIds);
 
         List<Hero> allHeroes = heroService.getAllHeroes();
 
