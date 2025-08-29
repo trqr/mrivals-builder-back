@@ -2,6 +2,7 @@ package com.mrivals_builder.Mrivals_Builder.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -36,11 +37,14 @@ public class Hero {
     private List<Ability> abilities;
 
     @OneToMany(mappedBy = "hero")
+    @JsonManagedReference
     private List<Synergie> synergies;
 
     @OneToMany(mappedBy = "hero")
+    @JsonManagedReference
     private List<MatchUp> matchUps;
 
     @ManyToMany(mappedBy = "heroes")
+    @JsonIgnore
     private List<Compo> compos;
 }
