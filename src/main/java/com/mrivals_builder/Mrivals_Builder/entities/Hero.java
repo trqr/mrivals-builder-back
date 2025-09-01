@@ -1,7 +1,6 @@
 package com.mrivals_builder.Mrivals_Builder.entities;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -46,5 +45,5 @@ public class Hero {
 
     @ManyToMany(mappedBy = "heroes")
     @JsonIgnore
-    private List<Compo> compos;
+    private List<Team> teams;
 }

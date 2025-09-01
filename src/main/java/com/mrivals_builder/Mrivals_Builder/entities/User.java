@@ -23,6 +23,6 @@ public class User {
     private String role = "USER";
 
     @OneToMany(mappedBy = "user")
-    private List<Compo> compos;
+    private List<Team> teams;
 
 }
