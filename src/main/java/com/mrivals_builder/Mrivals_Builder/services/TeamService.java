@@ -70,10 +70,13 @@ public class TeamService {
 
         List<Hero> heroes = heroRepository.findAllById(heroesIds);
 
-        User user = userRepository.findByEmail(principal.getName());
-
         Team created = new Team();
         created.setHeroes(heroes);
+
+        User user = null;
+        if (principal != null && principal.getName() != null) {
+            user = userRepository.findByEmail(principal.getName()).orElse(null);
+        }
         created.setUser(user);
 
         return teamRepository.save(created);

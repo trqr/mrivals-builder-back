@@ -3,6 +3,7 @@ package com.mrivals_builder.Mrivals_Builder.controllers;
 import com.mrivals_builder.Mrivals_Builder.dtos.TeamDTOs.BestWinRateByRoleDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.Team;
 import com.mrivals_builder.Mrivals_Builder.services.TeamService;
+import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class TeamController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Team> saveCompo(@RequestBody List<Long> heroesIds, Principal principal) {
+    public ResponseEntity<Team> saveCompo(@RequestBody List<Long> heroesIds, @Nullable Principal principal) {
         return new ResponseEntity<>(teamService.saveTeamComposition(heroesIds, principal), HttpStatus.CREATED);
     }
 }
