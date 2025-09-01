@@ -10,8 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
-
 @Component
 public class HeroMapper {
 
@@ -22,18 +20,18 @@ public class HeroMapper {
 
         Hero hero = new Hero();
 
-        hero.setExternalId(dto.getId());
-        hero.setName(dto.getName());
-        hero.setImageLink(dto.getImageUrl());
-        hero.setRole(dto.getRole());
-        hero.setAttackType(dto.getAttack_type());
-        hero.setDifficulty(dto.getDifficulty());
-        hero.setBio(dto.getBio());
-        hero.setLore(dto.getLore());
+        hero.setExternalId(dto.id());
+        hero.setName(dto.name());
+        hero.setImageLink(dto.imageUrl());
+        hero.setRole(dto.role());
+        hero.setAttackType(dto.attack_type());
+        hero.setDifficulty(dto.difficulty());
+        hero.setBio(dto.bio());
+        hero.setLore(dto.lore());
 
-        List<Ability> abilities = dto.getAbilities().stream()
+        List<Ability> abilities = dto.abilities().stream()
                 .map(abilityDto ->  {
-                        Ability ability = abilityRepository.findAllByExternalId(abilityDto.getId()).stream().findFirst()
+                        Ability ability = abilityRepository.findAllByExternalId(abilityDto.id()).stream().findFirst()
                         .orElseGet(Ability::new);
 
         return mapAbilityToEntity(abilityDto, ability, hero);
@@ -46,12 +44,12 @@ public class HeroMapper {
     }
 
     private Ability mapAbilityToEntity(AbilityExternalApiDTO dto, Ability ability, Hero hero) {
-        ability.setExternalId(dto.getId());
-        ability.setName(dto.getName());
-        ability.setType(dto.getType());
-        ability.setCollab(dto.isCollab());
-        ability.setDescription(dto.getDescription());
-        ability.setIcon(dto.getIcon());
+        ability.setExternalId(dto.id());
+        ability.setName(dto.name());
+        ability.setType(dto.type());
+        ability.setCollab(dto.collab());
+        ability.setDescription(dto.description());
+        ability.setIcon(dto.icon());
         ability.setHero(hero);
         return ability;
     }

@@ -18,20 +18,20 @@ public class MapMapper {
 
     public Map mapToEntity(MapExternalApiDTO dto, Map map) {
 
-        map.setExternalId(dto.getId());
-        map.setName(dto.getName());
-        map.setFullName(dto.getFullName());
-        map.setLocation(dto.getLocation());
-        map.setDescription(dto.getDescription());
-        map.setGameMode(dto.getGameMode());
-        map.setCompetitive(dto.isCompetitive());
-        map.setVideoLink(dto.getVideo());
+        map.setExternalId(dto.id());
+        map.setName(dto.name());
+        map.setFullName(dto.fullName());
+        map.setLocation(dto.location());
+        map.setDescription(dto.description());
+        map.setGameMode(dto.gameMode());
+        map.setCompetitive(dto.competitive());
+        map.setVideoLink(dto.video());
 
         return map;
     }
 
     public List<MapImage> dtoToMapImage(MapExternalApiDTO dto, Map map) {
-        List<MapImage> images = dto.getImages().stream()
+        List<MapImage> images = dto.images().stream()
                 .map(imgUrl -> {
                     MapImage mapImage = mapImageRepository.findByImageLinkAndMap(imgUrl, map)
                             .orElseGet(MapImage::new);

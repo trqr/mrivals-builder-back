@@ -1,19 +1,13 @@
 package com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class AbilityExternalApiDTO {
-    private Long id;
-    private String name;
-    private String type;
-    @JsonProperty("isCollab")
-    private boolean collab;
-    private String description;
-    private String icon;
-}
+public record AbilityExternalApiDTO(
+        Long id,
+        String name,
+        String type,
+        @JsonProperty("isCollab")
+        boolean collab,
+        String description,
+        String icon
+) {}

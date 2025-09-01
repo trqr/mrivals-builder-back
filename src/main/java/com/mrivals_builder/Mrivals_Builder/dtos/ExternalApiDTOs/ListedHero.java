@@ -1,15 +1,3 @@
 package com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.List;
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class ListedHero {
-
-    private Long id;
-}
+public record ListedHero(Long id) {}

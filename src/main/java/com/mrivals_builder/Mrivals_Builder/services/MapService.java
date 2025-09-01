@@ -32,7 +32,7 @@ public class MapService {
 
         List<Map> maps = dtos.stream()
                 .map(dto -> {
-                    Map map = mapRepository.findByExternalId(dto.getId())
+                    Map map = mapRepository.findByExternalId(dto.id())
                             .orElseGet(Map::new);
 
                     Map saved = mapRepository.save(mapMapper.mapToEntity(dto, map));

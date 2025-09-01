@@ -52,7 +52,7 @@ public class HeroService {
         List<Hero> heroes = new ArrayList<>();
 
         for (ListedHero listedHero : heroList) {
-            heroes.add(getOrUpdateHeroData(listedHero.getId()));
+            heroes.add(getOrUpdateHeroData(listedHero.id()));
         }
 
         return heroes;
@@ -65,7 +65,7 @@ public class HeroService {
     private Hero updateStats(Hero hero){
         HeroStatsExternalApiDTO heroStatsDto = externalApiService.getHeroStatsFromApi(hero.getExternalId());
 
-        double winRate = (double) heroStatsDto.getWins() / heroStatsDto.getMatches();
+        double winRate = (double) heroStatsDto.wins() / heroStatsDto.matches();
 
         hero.setWinRate(winRate);
 

@@ -98,6 +98,6 @@ public class ExternalApiService {
                 MapApiResponse.class
         );
 
-        return response.getBody().getMaps();
+        return response.getBody().maps();
     }
 }

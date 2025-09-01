@@ -24,24 +24,22 @@ public class AuthService {
     private JwtUtil jwtUtil;
 
     public RegisterResponseDTO register(RegisterRequestDTO request){
-        if (userRepository.existsByEmail(request.getEmail())){
+        if (userRepository.existsByEmail(request.email())){
             throw new RuntimeException("Email already exists");
         }
-        String encryptedPassword = passwordEncoder.encode(request.getPassword());
+        String encryptedPassword = passwordEncoder.encode(request.password());
 
         User created = new User();
-        created.setEmail(request.getEmail());
-        created.setMrivalsAccount(request.getMrivalsAccount());
-        created.setUsername(request.getUsername());
+        created.setEmail(request.email());
+        created.setMrivalsAccount(request.mrivalsAccount());
+        created.setUsername(request.username());
         created.setPassword(encryptedPassword);
         User saved = userRepository.save(created);
 
         String token = jwtUtil.generateToken(saved.getEmail(), saved.getRole());
 
         UserDTO userDTO = new UserDTO(saved);
-        RegisterResponseDTO response = new RegisterResponseDTO();
-        response.setUser(userDTO);
-        response.setToken(token);
+        RegisterResponseDTO response = new RegisterResponseDTO(token, userDTO);
 
         return response;
     }
