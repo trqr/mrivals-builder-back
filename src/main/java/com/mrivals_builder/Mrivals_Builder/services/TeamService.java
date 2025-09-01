@@ -36,7 +36,7 @@ public class TeamService {
     public List<BestWinRateByRoleDTO> getBestWinRateByRole(List<Long> heroesIds){
         List<Hero> teamHeroes = heroRepository.findAllById(heroesIds);
 
-        List<Hero> allHeroes = heroService.getAllHeroes();
+        List<Hero> allHeroes = heroRepository.findAll();
 
         Set<Long> excludedIds = teamHeroes.stream()
                 .map(Hero::getId)

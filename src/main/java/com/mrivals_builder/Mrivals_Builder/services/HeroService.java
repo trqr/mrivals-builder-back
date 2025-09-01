@@ -3,6 +3,7 @@ package com.mrivals_builder.Mrivals_Builder.services;
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroExternalApiDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroStatsExternalApiDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.ListedHero;
+import com.mrivals_builder.Mrivals_Builder.dtos.HeroDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.Hero;
 import com.mrivals_builder.Mrivals_Builder.exceptions.NotFoundException;
 import com.mrivals_builder.Mrivals_Builder.mappers.HeroMapper;
@@ -46,7 +47,7 @@ public class HeroService {
         return updateStats(hero);
     }
 
-    public List<Hero> getOrUpdateAllHeroData() {
+    public List<HeroDTO> getOrUpdateAllHeroData() {
         List<ListedHero> heroList = externalApiService.getHeroListFromApi();
 
         List<Hero> heroes = new ArrayList<>();
@@ -55,11 +56,14 @@ public class HeroService {
             heroes.add(getOrUpdateHeroData(listedHero.id()));
         }
 
-        return heroes;
+        return heroes.stream().map(hero -> heroMapper.entityToDTO(hero)).toList();
     }
 
-    public List<Hero> getAllHeroes(){
-        return heroRepository.findAll();
+    public List<HeroDTO> getAllHeroes(){
+
+        List<Hero> heroes = heroRepository.findAll();
+
+        return heroes.stream().map(hero -> heroMapper.entityToDTO(hero)).toList();
     }
 
     private Hero updateStats(Hero hero){
@@ -72,8 +76,10 @@ public class HeroService {
         return hero;
     }
 
-    public Hero getHeroById(Long heroId) {
-        return heroRepository.findById(heroId)
+    public HeroDTO getHeroById(Long heroId) {
+        Hero hero = heroRepository.findById(heroId)
                 .orElseThrow(() -> new NotFoundException("Hero with id " + heroId + " not found"));
+
+        return heroMapper.entityToDTO(hero);
     }
 }

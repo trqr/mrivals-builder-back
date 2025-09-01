@@ -1,7 +1,9 @@
 package com.mrivals_builder.Mrivals_Builder.mappers;
 
+import com.mrivals_builder.Mrivals_Builder.dtos.AbilityDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.AbilityExternalApiDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroExternalApiDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.HeroDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.Ability;
 import com.mrivals_builder.Mrivals_Builder.entities.Hero;
 import com.mrivals_builder.Mrivals_Builder.repositories.AbilityRepository;
@@ -52,6 +54,27 @@ public class HeroMapper {
         ability.setIcon(dto.icon());
         ability.setHero(hero);
         return ability;
+    }
+
+    public HeroDTO entityToDTO(Hero hero){
+        List<AbilityDTO> abilities =  AbilityMapper.entityToDTO(hero.getAbilities());
+
+        HeroDTO dto = new HeroDTO(
+                hero.getId(),
+                hero.getExternalId(),
+                hero.getName(),
+                hero.getImageLink(),
+                hero.getRole(),
+                hero.getAttackType(),
+                hero.getDifficulty(),
+                hero.getBio(),
+                hero.getLore(),
+                hero.getWinRate(),
+                abilities,
+                null,
+                null
+        );
+        return dto;
     }
 }
 

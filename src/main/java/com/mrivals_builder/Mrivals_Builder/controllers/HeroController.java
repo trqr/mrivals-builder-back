@@ -1,6 +1,7 @@
 package com.mrivals_builder.Mrivals_Builder.controllers;
 
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.ListedHero;
+import com.mrivals_builder.Mrivals_Builder.dtos.HeroDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.Hero;
 import com.mrivals_builder.Mrivals_Builder.services.HeroService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +22,17 @@ public class HeroController {
     private HeroService heroService;
 
     @GetMapping("/update")
-    public ResponseEntity<List<Hero>> getAllHeroesFromApi(){
+    public ResponseEntity<List<HeroDTO>> getAllHeroesFromApi(){
         return new ResponseEntity<>(heroService.getOrUpdateAllHeroData(), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<Hero>> getAllHeroes(){
+    public ResponseEntity<List<HeroDTO>> getAllHeroes(){
         return new ResponseEntity<>(heroService.getAllHeroes(), HttpStatus.OK);
     }
 
     @GetMapping("/{heroId}")
-    public ResponseEntity<Hero> getHeroById(@PathVariable Long heroId){
+    public ResponseEntity<HeroDTO> getHeroById(@PathVariable Long heroId){
         return new ResponseEntity<>(heroService.getHeroById(heroId), HttpStatus.OK);
     }
 }
