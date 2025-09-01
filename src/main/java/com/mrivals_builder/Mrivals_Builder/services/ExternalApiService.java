@@ -23,7 +23,8 @@ public class ExternalApiService {
     @Value("${api.key}")
     private String apiKey;
 
-    private String baseUrl = "https://marvelrivalsapi.com/api/v1";
+    @Value("${api.base.url}")
+    private String baseUrl;
 
     public List<ListedHero> getHeroListFromApi(){
         String url = baseUrl + "/heroes";
