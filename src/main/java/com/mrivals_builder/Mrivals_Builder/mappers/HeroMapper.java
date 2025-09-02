@@ -1,5 +1,10 @@
 package com.mrivals_builder.Mrivals_Builder.mappers;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.mrivals_builder.Mrivals_Builder.dtos.AbilityDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.AbilityExternalApiDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroExternalApiDTO;
@@ -8,12 +13,7 @@ import com.mrivals_builder.Mrivals_Builder.dtos.MatchUpDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.SynergieDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.Ability;
 import com.mrivals_builder.Mrivals_Builder.entities.Hero;
-import com.mrivals_builder.Mrivals_Builder.entities.Synergie;
 import com.mrivals_builder.Mrivals_Builder.repositories.AbilityRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class HeroMapper {
@@ -76,8 +76,8 @@ public class HeroMapper {
                 hero.getLore(),
                 hero.getWinRate(),
                 abilities,
-                matchUps,
-                synergies
+                synergies,
+                matchUps
         );
         return dto;
     }
