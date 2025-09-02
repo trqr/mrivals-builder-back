@@ -4,6 +4,7 @@ import com.mrivals_builder.Mrivals_Builder.dtos.AbilityDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.AbilityExternalApiDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroExternalApiDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.HeroDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.MatchUpDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.Ability;
 import com.mrivals_builder.Mrivals_Builder.entities.Hero;
 import com.mrivals_builder.Mrivals_Builder.repositories.AbilityRepository;
@@ -56,8 +57,9 @@ public class HeroMapper {
         return ability;
     }
 
-    public HeroDTO entityToDTO(Hero hero){
+    public static HeroDTO entityToDTO(Hero hero){
         List<AbilityDTO> abilities =  AbilityMapper.entityToDTO(hero.getAbilities());
+        List<MatchUpDTO> matchUps = MatchUpMapper.entityToDTO(hero.getMatchUps());
 
         HeroDTO dto = new HeroDTO(
                 hero.getId(),
@@ -72,7 +74,7 @@ public class HeroMapper {
                 hero.getWinRate(),
                 abilities,
                 null,
-                null
+                matchUps
         );
         return dto;
     }

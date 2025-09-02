@@ -1,10 +1,14 @@
 package com.mrivals_builder.Mrivals_Builder.services;
 
+import com.mrivals_builder.Mrivals_Builder.dtos.HeroDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.TeamDTOs.BestWinRateByRoleDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.TeamDTOs.TeamDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.Team;
 import com.mrivals_builder.Mrivals_Builder.entities.Hero;
 import com.mrivals_builder.Mrivals_Builder.entities.User;
 import com.mrivals_builder.Mrivals_Builder.exceptions.BadRequestException;
+import com.mrivals_builder.Mrivals_Builder.mappers.HeroMapper;
+import com.mrivals_builder.Mrivals_Builder.mappers.TeamMapper;
 import com.mrivals_builder.Mrivals_Builder.repositories.TeamRepository;
 import com.mrivals_builder.Mrivals_Builder.repositories.HeroRepository;
 import com.mrivals_builder.Mrivals_Builder.repositories.UserRepository;
@@ -58,12 +62,14 @@ public class TeamService {
                         )
                 ));
         return bestByRole.entrySet().stream()
-                .map(entry -> new BestWinRateByRoleDTO(entry.getKey(), entry.getValue()))
+                .map(entry -> new BestWinRateByRoleDTO(entry.getKey(), entry.getValue().stream()
+                        .map(HeroMapper::entityToDTO)
+                        .toList()))
                 .toList();
     }
 
 
-    public Team saveTeamComposition(List<Long> heroesIds, Principal principal) {
+    public TeamDTO saveTeamComposition(List<Long> heroesIds, Principal principal) {
         if (heroesIds.size() > 6) {
             throw new BadRequestException("You can't save a team composition with more than 6 heroes");
         }
@@ -79,6 +85,8 @@ public class TeamService {
         }
         created.setUser(user);
 
-        return teamRepository.save(created);
+        Team saved = teamRepository.save(created);
+
+        return TeamMapper.entityToDTO(saved);
     }
 }

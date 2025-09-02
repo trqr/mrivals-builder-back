@@ -15,10 +15,8 @@ public class MatchUp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @JsonBackReference
     @ManyToOne
     private Hero hero;
-    @JsonBackReference
     @ManyToOne
     private Hero counterPick;
     private String value;

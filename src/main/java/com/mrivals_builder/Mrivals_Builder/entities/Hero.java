@@ -32,7 +32,6 @@ public class Hero {
     private double winRate;
 
     @OneToMany(mappedBy = "hero")
-    @JsonManagedReference
     private List<Ability> abilities;
 
     @OneToMany(mappedBy = "hero")
@@ -40,7 +39,6 @@ public class Hero {
     private List<Synergie> synergies;
 
     @OneToMany(mappedBy = "hero")
-    @JsonManagedReference
     private List<MatchUp> matchUps;
 
     @ManyToMany(mappedBy = "heroes")
