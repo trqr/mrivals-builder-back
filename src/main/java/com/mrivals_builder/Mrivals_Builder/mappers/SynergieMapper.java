@@ -14,7 +14,7 @@ public class SynergieMapper {
         return synergies.stream().map(synergie -> new SynergieDTO(
                 synergie.getId(),
                 synergie.getHero().getId(),
-                new HeroSummaryDTO(Synergie.getAlly().getId(), Synergie.getAlly().getName(), Synergie.getAlly().getImageLink()),
+                new HeroSummaryDTO(synergie.getAlly().getId(), synergie.getAlly().getName(), synergie.getAlly().getImageLink()),
                 synergie.getValue(),
                 synergie.getIsTeamUp(),
             )
