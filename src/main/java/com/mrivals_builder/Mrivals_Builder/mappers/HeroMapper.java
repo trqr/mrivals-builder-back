@@ -5,8 +5,10 @@ import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.AbilityExternalA
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroExternalApiDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.HeroDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.MatchUpDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.SynergieDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.Ability;
 import com.mrivals_builder.Mrivals_Builder.entities.Hero;
+import com.mrivals_builder.Mrivals_Builder.entities.Synergie;
 import com.mrivals_builder.Mrivals_Builder.repositories.AbilityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -60,6 +62,7 @@ public class HeroMapper {
     public static HeroDTO entityToDTO(Hero hero){
         List<AbilityDTO> abilities =  AbilityMapper.entityToDTO(hero.getAbilities());
         List<MatchUpDTO> matchUps = MatchUpMapper.entityToDTO(hero.getMatchUps());
+        List<SynergieDTO> synergies = SynergieMapper.entityToDTO(hero.getSynergies());
 
         HeroDTO dto = new HeroDTO(
                 hero.getId(),
@@ -73,8 +76,8 @@ public class HeroMapper {
                 hero.getLore(),
                 hero.getWinRate(),
                 abilities,
-                null,
-                matchUps
+                matchUps,
+                synergies
         );
         return dto;
     }
