@@ -16,7 +16,7 @@ public class SynergieMapper {
                 synergie.getHero().getId(),
                 new HeroSummaryDTO(synergie.getAlly().getId(), synergie.getAlly().getName(), synergie.getAlly().getImageLink()),
                 synergie.getValue(),
-                synergie.getIsTeamUp()
+                synergie.isTeamUp()
             )
         ).toList();
     }
