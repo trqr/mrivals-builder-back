@@ -16,10 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -50,17 +47,20 @@ public class TeamService {
                 .filter(hero -> !excludedIds.contains(hero.getId()))
                 .toList();
 
-        Map<String, List<Hero>> bestByRole = availableHeroes.stream()
-                .collect(Collectors.groupingBy(
-                        Hero::getRole,
-                        Collectors.collectingAndThen(
-                                Collectors.toList(),
-                                list -> list.stream()
-                                        .sorted(Comparator.comparingDouble(Hero::getWinRate).reversed())
-                                        .limit(2)
-                                        .toList()
-                        )
-                ));
+        Map<String, List<Hero>> bestByRole = new HashMap<>();
+
+        Map<String, List<Hero>> groupedByRole = availableHeroes.stream()
+                .collect(Collectors.groupingBy(Hero::getRole));
+
+        groupedByRole.forEach((role, heroes) -> {
+            List<Hero> bestHeroes = heroes.stream()
+                    .sorted(Comparator.comparingDouble(Hero::getWinRate).reversed())
+                    .limit(2)
+                    .toList();
+
+            bestByRole.put(role, bestHeroes);
+        });
+
         return bestByRole.entrySet().stream()
                 .map(entry -> new BestWinRateByRoleDTO(entry.getKey(), entry.getValue().stream()
                         .map(HeroMapper::entityToDTO)
