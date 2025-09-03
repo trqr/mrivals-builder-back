@@ -4,5 +4,5 @@ public record MatchUpDTO(
         Long id,
         Long heroId,
         HeroSummaryDTO counterPick,
-        String value
+        int value
 ) {}

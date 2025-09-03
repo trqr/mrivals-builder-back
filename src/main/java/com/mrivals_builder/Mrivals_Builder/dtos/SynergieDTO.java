@@ -4,7 +4,7 @@ public record SynergieDTO(
         Long id,
         Long heroId,
         HeroSummaryDTO ally,
-        String value,
+        int value,
         boolean isTeamUp
 ) {}
 
