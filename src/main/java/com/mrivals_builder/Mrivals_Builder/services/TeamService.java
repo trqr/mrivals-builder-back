@@ -68,6 +68,30 @@ public class TeamService {
                 .toList();
     }
 
+    /*public List<TeamCounter> getTeamCounter(List<Long> heroesIds) {
+        // 1) Récupérer tous les matchups
+        List<MatchUp> allMatchups = new ArrayList<>();
+        for (Long heroId : heroesIds) {
+            Hero hero = heroRepository.findById(heroId).orElse(null);
+            if (hero != null) {
+                List<MatchUp> heroMatchups = matchUpRepository.findByHero(hero);
+                allMatchups.addAll(heroMatchups);
+            }
+        }
+
+        // 2) Grouper counter Id et calculer les pires matchups
+        Map<Long, Int> enemyScores = allMatchups.stream()
+                .collect(Collectors.groupingBy(
+                        MatchUp::getCounterHeroId,
+                        Collectors.summingInt(MatchUp::getValue)
+                ));
+
+        //3) trouver les plus gros contre à la composition grâce au somme récupérer plus tôt
+
+        //4) retourner les contre de la composition
+        return
+    }*/
+
 
     public TeamDTO saveTeamComposition(List<Long> heroesIds, Principal principal) {
         if (heroesIds.size() > 6) {
