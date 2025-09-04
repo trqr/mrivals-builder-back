@@ -19,5 +19,5 @@ public class MatchUp {
     private Hero hero;
     @ManyToOne
     private Hero counterPick;
-    private String value;
+    private int value;
 }

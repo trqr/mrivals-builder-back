@@ -21,6 +21,6 @@ public class Synergie {
     @ManyToOne
     @JsonBackReference
     private Hero ally;
-    private String value;
+    private int value;
     private boolean isTeamUp;
 }
