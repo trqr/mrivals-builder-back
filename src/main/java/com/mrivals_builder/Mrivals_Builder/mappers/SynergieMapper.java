@@ -2,7 +2,7 @@ package com.mrivals_builder.Mrivals_Builder.mappers;
 
 import java.util.List;
 
-import com.mrivals_builder.Mrivals_Builder.dtos.HeroSummaryDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.HeroDTOs.HeroSummaryDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.SynergieDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.Synergie;
 

@@ -1,6 +1,6 @@
 package com.mrivals_builder.Mrivals_Builder.mappers;
 
-import com.mrivals_builder.Mrivals_Builder.dtos.HeroSummaryDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.HeroDTOs.HeroSummaryDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.MatchUpDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.MatchUp;
 

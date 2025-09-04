@@ -1,4 +1,8 @@
-package com.mrivals_builder.Mrivals_Builder.dtos;
+package com.mrivals_builder.Mrivals_Builder.dtos.HeroDTOs;
+
+import com.mrivals_builder.Mrivals_Builder.dtos.AbilityDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.MatchUpDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.SynergieDTO;
 
 import java.util.List;
 

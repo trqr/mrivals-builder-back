@@ -21,4 +21,22 @@ public class UserService {
 
         return dtos;
     }
+
+    public List<UserDTO> changeUsersRoleToAdmin(List<Long> ids) {
+        List<User> users = userRepository.findAllById(ids);
+
+        users.forEach(user -> user.setRole("ADMIN"));
+        userRepository.saveAll(users);
+
+        return users.stream().map(user -> new UserDTO(user)).toList();
+    }
+
+    public List<UserDTO> changeUsersRoleToUser(List<Long> ids) {
+        List<User> users = userRepository.findAllById(ids);
+
+        users.forEach(user -> user.setRole("USER"));
+        userRepository.saveAll(users);
+
+        return users.stream().map(user -> new UserDTO(user)).toList();
+    }
 }
