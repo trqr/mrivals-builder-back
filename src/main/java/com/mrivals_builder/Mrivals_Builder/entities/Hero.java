@@ -30,6 +30,8 @@ public class Hero {
     @Column(columnDefinition = "TEXT")
     private String lore;
     private double winRate;
+    private boolean isMainTank;
+    private boolean isMainHeal;
 
     @OneToMany(mappedBy = "hero")
     private List<Ability> abilities;
