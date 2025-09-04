@@ -1,5 +1,6 @@
 package com.mrivals_builder.Mrivals_Builder.controllers;
 
+import com.mrivals_builder.Mrivals_Builder.dtos.TeamCounterDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.TeamDTOs.BestWinRateByRoleDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.TeamDTOs.TeamDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.Team;
@@ -23,6 +24,11 @@ public class TeamController {
     @PostMapping("/bestWinRateByRole")
     public ResponseEntity<List<BestWinRateByRoleDTO>> getBestWinRateByRole(@RequestBody List<Long> heroesIds){
         return new ResponseEntity<>(teamService.getBestWinRateByRole(heroesIds), HttpStatus.OK);
+    }
+
+    @PostMapping("/teamCounter")
+    public ResponseEntity<List<TeamCounterDTO>> getTeamCounter(@RequestBody List<Long> heroesIds){
+        return new ResponseEntity<>(teamService.getTeamCounter(heroesIds), HttpStatus.OK);
     }
 
     @PostMapping("/save")
