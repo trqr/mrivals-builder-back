@@ -1,17 +1,20 @@
 package com.mrivals_builder.Mrivals_Builder.services;
 
 import com.mrivals_builder.Mrivals_Builder.dtos.HeroDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.TeamCounterDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.TeamDTOs.BestWinRateByRoleDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.TeamDTOs.TeamDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.Team;
 import com.mrivals_builder.Mrivals_Builder.entities.Hero;
 import com.mrivals_builder.Mrivals_Builder.entities.User;
+import com.mrivals_builder.Mrivals_Builder.entities.MatchUp;
 import com.mrivals_builder.Mrivals_Builder.exceptions.BadRequestException;
 import com.mrivals_builder.Mrivals_Builder.mappers.HeroMapper;
 import com.mrivals_builder.Mrivals_Builder.mappers.TeamMapper;
 import com.mrivals_builder.Mrivals_Builder.repositories.TeamRepository;
 import com.mrivals_builder.Mrivals_Builder.repositories.HeroRepository;
 import com.mrivals_builder.Mrivals_Builder.repositories.UserRepository;
+import com.mrivals_builder.Mrivals_Builder.repositories.MatchUpRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +36,9 @@ public class TeamService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private MatchUpRepository matchUpRepository;
 
     public List<BestWinRateByRoleDTO> getBestWinRateByRole(List<Long> heroesIds){
         List<Hero> teamHeroes = heroRepository.findAllById(heroesIds);
@@ -68,29 +74,36 @@ public class TeamService {
                 .toList();
     }
 
-    /*public List<TeamCounter> getTeamCounter(List<Long> heroesIds) {
-        // 1) Récupérer tous les matchups
-        List<MatchUp> allMatchups = new ArrayList<>();
-        for (Long heroId : heroesIds) {
-            Hero hero = heroRepository.findById(heroId).orElse(null);
-            if (hero != null) {
-                List<MatchUp> heroMatchups = matchUpRepository.findByHero(hero);
-                allMatchups.addAll(heroMatchups);
-            }
+    public List<TeamCounterDTO> getTeamCounter(List<Long> heroesIds) {
+    // 1) Charger tout les matchups des héros de la compo
+    List<MatchUp> allMatchups = new ArrayList<>();
+    for (Long heroId : heroesIds) {
+        Hero hero = heroRepository.findById(heroId).orElse(null);
+        if (hero != null) {
+            List<MatchUp> heroMatchups = matchUpRepository.findByHero(hero);
+            allMatchups.addAll(heroMatchups);
         }
+    }
 
-        // 2) Grouper counter Id et calculer les pires matchups
-        Map<Long, Int> enemyScores = allMatchups.stream()
-                .collect(Collectors.groupingBy(
-                        MatchUp::getCounterHeroId,
-                        Collectors.summingInt(MatchUp::getValue)
-                ));
+    // 2) Regrouper par counter et aditionner les valeurs
+    Map<Hero, Integer> enemyScores = allMatchups.stream()
+        .collect(Collectors.groupingBy(
+            MatchUp::getCounterPick,
+            Collectors.summingInt(MatchUp::getValue)
+        ));
 
-        //3) trouver les plus gros contre à la composition grâce au somme récupérer plus tôt
+    // 3) Transformer le Map en List<TeamCounter>
+    List<TeamCounterDTO> counters = enemyScores.entrySet().stream()
+        .map(entry -> new TeamCounterDTO(entry.getKey().getId(), entry.getValue()))
+        .collect(Collectors.toList());
 
-        //4) retourner les contre de la composition
-        return
-    }*/
+    // 4) Trier par score
+    counters.sort(Comparator.comparingInt(TeamCounterDTO::totalScore));
+
+    // 5) retourner les 5 pires contre
+    return counters.stream().limit(5).toList();
+}
+
 
 
     public TeamDTO saveTeamComposition(List<Long> heroesIds, Principal principal) {
