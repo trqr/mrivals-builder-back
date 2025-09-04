@@ -3,15 +3,15 @@ package com.mrivals_builder.Mrivals_Builder.controllers;
 import com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs.LoginRequestDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs.RegisterRequestDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs.RegisterResponseDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs.UserDTO;
 import com.mrivals_builder.Mrivals_Builder.services.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/auth")
@@ -28,5 +28,10 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<RegisterResponseDTO> login(@Valid @RequestBody LoginRequestDTO request){
         return new ResponseEntity<>(authService.login(request.email(), request.password()), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<UserDTO> getCurrentUser(Principal principal){
+        return new ResponseEntity<>(authService.getCurrentUser(principal), HttpStatus.OK);
     }
 }
