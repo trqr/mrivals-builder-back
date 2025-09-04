@@ -35,6 +35,8 @@ public class HeroMapper {
         hero.setDifficulty(dto.difficulty());
         hero.setBio(dto.bio());
         hero.setLore(dto.lore());
+        hero.setMainTank(false);
+        hero.setMainHeal(false);
 
         List<Ability> abilities = dto.abilities().stream()
                 .map(abilityDto ->  {
@@ -77,6 +79,8 @@ public class HeroMapper {
                 hero.getBio(),
                 hero.getLore(),
                 hero.getWinRate(),
+                hero.isMainTank(),
+                hero.isMainHeal(),
                 abilities,
                 synergies,
                 matchUps

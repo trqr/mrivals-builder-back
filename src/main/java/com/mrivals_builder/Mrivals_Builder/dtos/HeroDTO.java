@@ -13,6 +13,8 @@ public record HeroDTO(
         String bio,
         String lore,
         double winRate,
+        boolean isMainTank,
+        boolean isMainHeal,
         List<AbilityDTO> abilities,
         List<SynergieDTO> synergies,
         List<MatchUpDTO> matchUps
