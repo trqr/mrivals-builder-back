@@ -3,6 +3,7 @@ package com.mrivals_builder.Mrivals_Builder.controllers;
 import com.mrivals_builder.Mrivals_Builder.dtos.TeamCounterDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.TeamDTOs.BestWinRateByRoleDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.TeamDTOs.TeamDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.TeamSynergieDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.Team;
 import com.mrivals_builder.Mrivals_Builder.services.TeamService;
 import jakarta.annotation.Nullable;
@@ -29,6 +30,11 @@ public class TeamController {
     @PostMapping("/teamCounter")
     public ResponseEntity<List<TeamCounterDTO>> getTeamCounter(@RequestBody List<Long> heroesIds){
         return new ResponseEntity<>(teamService.getTeamCounter(heroesIds), HttpStatus.OK);
+    }
+
+    @PostMapping("/teamSynergie")
+    public ResponseEntity<List<TeamSynergieDTO>> getTeamSynergie(@RequestBody List<Long> heroesIds){
+        return new ResponseEntity<>(teamService.getTeamSynergie(heroesIds), HttpStatus.OK);
     }
 
     @PostMapping("/save")

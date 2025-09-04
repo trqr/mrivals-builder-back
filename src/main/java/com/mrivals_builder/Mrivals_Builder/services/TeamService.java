@@ -4,22 +4,18 @@ import com.mrivals_builder.Mrivals_Builder.dtos.HeroDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.TeamCounterDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.TeamDTOs.BestWinRateByRoleDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.TeamDTOs.TeamDTO;
-import com.mrivals_builder.Mrivals_Builder.entities.Team;
-import com.mrivals_builder.Mrivals_Builder.entities.Hero;
-import com.mrivals_builder.Mrivals_Builder.entities.User;
-import com.mrivals_builder.Mrivals_Builder.entities.MatchUp;
+import com.mrivals_builder.Mrivals_Builder.dtos.TeamSynergieDTO;
+import com.mrivals_builder.Mrivals_Builder.entities.*;
 import com.mrivals_builder.Mrivals_Builder.exceptions.BadRequestException;
 import com.mrivals_builder.Mrivals_Builder.mappers.HeroMapper;
 import com.mrivals_builder.Mrivals_Builder.mappers.TeamMapper;
-import com.mrivals_builder.Mrivals_Builder.repositories.TeamRepository;
-import com.mrivals_builder.Mrivals_Builder.repositories.HeroRepository;
-import com.mrivals_builder.Mrivals_Builder.repositories.UserRepository;
-import com.mrivals_builder.Mrivals_Builder.repositories.MatchUpRepository;
+import com.mrivals_builder.Mrivals_Builder.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.*;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,6 +35,9 @@ public class TeamService {
 
     @Autowired
     private MatchUpRepository matchUpRepository;
+
+    @Autowired
+    private SynergieRepository synergieRepository;
 
     public List<BestWinRateByRoleDTO> getBestWinRateByRole(List<Long> heroesIds){
         List<Hero> teamHeroes = heroRepository.findAllById(heroesIds);
@@ -102,9 +101,32 @@ public class TeamService {
 
     // 5) retourner les 5 pires contre
     return counters.stream().limit(5).toList();
-}
+    }
 
+    public List<TeamSynergieDTO> getTeamSynergie(List<Long> heroesIds) {
+        List<Synergie> allSynergies = new ArrayList<>();
+        for(Long heroId : heroesIds) {
+            Hero hero = heroRepository.findById(heroId).orElse(null);
+            if(hero != null) {
+                List<Synergie> heroSynergies = synergieRepository.findByHero(hero);
+                allSynergies.addAll(heroSynergies);
+            }
+        }
 
+        Map<Hero, Integer> synergieScores = allSynergies.stream()
+                .collect(Collectors.groupingBy(
+                        Synergie::getAlly,
+                        Collectors.summingInt(Synergie::getValue)
+                ));
+
+        List<TeamSynergieDTO> allies = synergieScores.entrySet().stream()
+                .map(entry -> new TeamSynergieDTO(entry.getKey().getId(), entry.getValue()))
+                .collect(Collectors.toList());
+
+        allies.sort(Comparator.comparingInt(TeamSynergieDTO::totalScore));
+
+        return allies.stream().limit(5).toList();
+    }
 
     public TeamDTO saveTeamComposition(List<Long> heroesIds, Principal principal) {
         if (heroesIds.size() > 6) {
