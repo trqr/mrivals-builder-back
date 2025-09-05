@@ -66,7 +66,7 @@ public class HeroMapper {
     public static HeroDTO entityToDTO(Hero hero){
         List<AbilityDTO> abilities =  AbilityMapper.entityToDTO(hero.getAbilities());
         List<MatchUpDTO> matchUps = MatchUpMapper.entityToDTO(hero.getMatchUps());
-        List<SynergieDTO> synergies = SynergieMapper.entityToDTO(hero.getSynergies());
+        List<SynergieDTO> synergies = SynergieMapper.listEntityToDTO(hero.getSynergies());
 
         HeroDTO dto = new HeroDTO(
                 hero.getId(),
