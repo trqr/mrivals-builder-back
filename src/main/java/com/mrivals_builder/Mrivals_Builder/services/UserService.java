@@ -2,10 +2,13 @@ package com.mrivals_builder.Mrivals_Builder.services;
 
 import com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs.UserDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.User;
+import com.mrivals_builder.Mrivals_Builder.exceptions.BadRequestException;
+import com.mrivals_builder.Mrivals_Builder.exceptions.NotFoundException;
 import com.mrivals_builder.Mrivals_Builder.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 
 @Service
@@ -38,5 +41,17 @@ public class UserService {
         userRepository.saveAll(users);
 
         return users.stream().map(user -> new UserDTO(user)).toList();
+    }
+
+    public UserDTO changeMRAccount(Principal principal, Long id, String accountName) {
+        User currentUser = userRepository.findByEmail(principal.getName())
+                .orElseThrow(() -> new NotFoundException("User not Found!"));
+
+        if (!currentUser.getId().equals(id))
+            throw new BadRequestException("Request not allowed");
+
+        currentUser.setMrivalsAccount(accountName);
+        userRepository.save(currentUser);
+        return new UserDTO(currentUser);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -26,12 +27,17 @@ public class UserController {
     @PutMapping("/role/admin")
     @AdminOnly
     public ResponseEntity<List<UserDTO>> changeUsersRoleToAdmin(@RequestBody List<Long> ids){
-        return new ResponseEntity<>(userService.changeUsersRoleToAdmin(ids), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.changeUsersRoleToAdmin(ids), HttpStatus.OK);
     }
 
     @PutMapping("/role/user")
     @AdminOnly
     public ResponseEntity<List<UserDTO>> changeUsersRoleToUser(@RequestBody List<Long> ids){
-        return new ResponseEntity<>(userService.changeUsersRoleToUser(ids), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.changeUsersRoleToUser(ids), HttpStatus.OK);
+    }
+
+    @PatchMapping("/mr-account/{id}")
+    public ResponseEntity<UserDTO> changeMRAccount(Principal principal, @PathVariable Long id, @RequestBody String accountName){
+        return new ResponseEntity<>(userService.changeMRAccount(principal, id, accountName), HttpStatus.OK);
     }
 }
