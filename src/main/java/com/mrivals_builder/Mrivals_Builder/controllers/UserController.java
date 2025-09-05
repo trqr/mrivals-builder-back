@@ -42,8 +42,13 @@ public class UserController {
         return new ResponseEntity<>(userService.changeMRAccount(principal, id, accountName), HttpStatus.OK);
     }
 
-    @PatchMapping("/new-password")
+    @PatchMapping("/password")
     public ResponseEntity<UserDTO> changePassword(Principal principal, @RequestBody NewPasswordRequestDTO requestDTO){
         return new ResponseEntity<>(userService.changePassword(principal, requestDTO), HttpStatus.OK);
+    }
+
+    @PatchMapping("/username")
+    public ResponseEntity<UserDTO> changerUsername(Principal principal, @RequestBody String userName){
+        return new ResponseEntity<>(userService.changeUsername(principal, userName), HttpStatus.OK);
     }
 }

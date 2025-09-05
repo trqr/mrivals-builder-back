@@ -72,4 +72,13 @@ public class UserService {
 
         throw new BadRequestException("You current password is not correct");
     }
+
+    public UserDTO changeUsername(Principal principal, String userName) {
+        User currentUser = userRepository.findByEmail(principal.getName())
+                .orElseThrow(() -> new NotFoundException("User not Found!"));
+
+        currentUser.setUsername(userName);
+        userRepository.save(currentUser);
+        return new UserDTO(currentUser);
+    }
 }
