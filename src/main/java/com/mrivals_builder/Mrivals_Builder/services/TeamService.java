@@ -6,6 +6,7 @@ import com.mrivals_builder.Mrivals_Builder.dtos.TeamDTOs.TeamDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.TeamSynergieDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.*;
 import com.mrivals_builder.Mrivals_Builder.exceptions.BadRequestException;
+import com.mrivals_builder.Mrivals_Builder.exceptions.NotFoundException;
 import com.mrivals_builder.Mrivals_Builder.mappers.HeroMapper;
 import com.mrivals_builder.Mrivals_Builder.mappers.TeamMapper;
 import com.mrivals_builder.Mrivals_Builder.repositories.*;
@@ -151,5 +152,14 @@ public class TeamService {
         Team saved = teamRepository.save(created);
 
         return TeamMapper.entityToDTO(saved);
+    }
+
+    public List<TeamDTO> getUserTeamCompos(Principal principal) {
+        User currentUser = userRepository.findByEmail(principal.getName())
+                .orElseThrow(() -> new NotFoundException("User not found"));
+
+        List<Team> teams = teamRepository.findAllByUser(currentUser);
+
+        return teams.stream().map(team -> TeamMapper.entityToDTO(team)).toList();
     }
 }

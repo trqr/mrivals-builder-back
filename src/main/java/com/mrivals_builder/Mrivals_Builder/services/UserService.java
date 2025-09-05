@@ -48,7 +48,7 @@ public class UserService {
         return users.stream().map(user -> new UserDTO(user)).toList();
     }
 
-    public UserDTO changeMRAccount(Principal principal, Long id, String accountName) {
+    public UserDTO changeMRAccount(Long id, String accountName) {
         User currentUser = getCurrentUser();
 
         if (!currentUser.getId().equals(id))
@@ -59,7 +59,7 @@ public class UserService {
         return new UserDTO(currentUser);
     }
 
-    public UserDTO changePassword(Principal principal, NewPasswordRequestDTO requestDTO) {
+    public UserDTO changePassword(NewPasswordRequestDTO requestDTO) {
         User currentUser = getCurrentUser();
 
         if (passwordEncoder.matches(requestDTO.oldPassword(), currentUser.getPassword())){
@@ -71,7 +71,7 @@ public class UserService {
         throw new BadRequestException("You current password is not correct");
     }
 
-    public UserDTO changeUsername(Principal principal, String userName) {
+    public UserDTO changeUsername(String userName) {
         User currentUser = getCurrentUser();
 
         currentUser.setUsername(userName);
