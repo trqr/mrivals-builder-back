@@ -2,13 +2,12 @@ package com.mrivals_builder.Mrivals_Builder.services;
 
 import com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs.RegisterRequestDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs.RegisterResponseDTO;
-import com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs.UserDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.UserDTOs.UserDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.User;
 import com.mrivals_builder.Mrivals_Builder.exceptions.NotFoundException;
 import com.mrivals_builder.Mrivals_Builder.repositories.UserRepository;
 import com.mrivals_builder.Mrivals_Builder.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authorization.method.AuthorizeReturnObject;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

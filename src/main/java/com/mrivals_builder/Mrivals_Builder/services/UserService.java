@@ -1,11 +1,14 @@
 package com.mrivals_builder.Mrivals_Builder.services;
 
-import com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs.UserDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.UserDTOs.NewPasswordRequestDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.UserDTOs.UserDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.User;
 import com.mrivals_builder.Mrivals_Builder.exceptions.BadRequestException;
 import com.mrivals_builder.Mrivals_Builder.exceptions.NotFoundException;
 import com.mrivals_builder.Mrivals_Builder.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
@@ -16,6 +19,8 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public List<UserDTO> getAllUsers() {
         List<User> users = userRepository.findAll();
@@ -53,5 +58,18 @@ public class UserService {
         currentUser.setMrivalsAccount(accountName);
         userRepository.save(currentUser);
         return new UserDTO(currentUser);
+    }
+
+    public UserDTO changePassword(Principal principal, NewPasswordRequestDTO requestDTO) {
+        User currentUser = userRepository.findByEmail(principal.getName())
+                .orElseThrow(() -> new NotFoundException("User not Found!"));
+
+        if (passwordEncoder.matches(requestDTO.oldPassword(), currentUser.getPassword())){
+            currentUser.setPassword(passwordEncoder.encode(requestDTO.newPassword()));
+            userRepository.save(currentUser);
+            return new UserDTO(currentUser);
+        }
+
+        throw new BadRequestException("You current password is not correct");
     }
 }

@@ -1,7 +1,6 @@
-package com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs;
+package com.mrivals_builder.Mrivals_Builder.dtos.UserDTOs;
 
 import com.mrivals_builder.Mrivals_Builder.entities.User;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
