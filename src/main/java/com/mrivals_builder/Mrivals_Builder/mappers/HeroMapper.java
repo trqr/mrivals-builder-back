@@ -4,7 +4,7 @@ package com.mrivals_builder.Mrivals_Builder.mappers;
 import com.mrivals_builder.Mrivals_Builder.dtos.AbilityDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.AbilityExternalApiDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroExternalApiDTO;
-import com.mrivals_builder.Mrivals_Builder.dtos.HeroDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.HeroDTOs.HeroDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.MatchUpDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.SynergieDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.Ability;
@@ -66,7 +66,7 @@ public class HeroMapper {
     public static HeroDTO entityToDTO(Hero hero){
         List<AbilityDTO> abilities =  AbilityMapper.entityToDTO(hero.getAbilities());
         List<MatchUpDTO> matchUps = MatchUpMapper.entityToDTO(hero.getMatchUps());
-        List<SynergieDTO> synergies = SynergieMapper.entityToDTO(hero.getSynergies());
+        List<SynergieDTO> synergies = SynergieMapper.listEntityToDTO(hero.getSynergies());
 
         HeroDTO dto = new HeroDTO(
                 hero.getId(),

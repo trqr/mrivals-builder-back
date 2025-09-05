@@ -8,8 +8,11 @@ import com.mrivals_builder.Mrivals_Builder.exceptions.NotFoundException;
 import com.mrivals_builder.Mrivals_Builder.repositories.UserRepository;
 import com.mrivals_builder.Mrivals_Builder.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authorization.method.AuthorizeReturnObject;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.security.Principal;
 
 @Service
 public class AuthService {
@@ -53,5 +56,11 @@ public class AuthService {
             String token = jwtUtil.generateToken(email, user.getRole());
             return new RegisterResponseDTO(token, new UserDTO(user));
         }
+    }
+
+    public UserDTO getCurrentUser(Principal principal) {
+        User user = userRepository.findByEmail(principal.getName())
+                .orElseThrow(() -> new NotFoundException("User not found"));
+        return new UserDTO(user);
     }
 }

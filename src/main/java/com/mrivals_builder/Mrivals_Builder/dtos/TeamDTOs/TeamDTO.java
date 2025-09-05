@@ -1,7 +1,6 @@
 package com.mrivals_builder.Mrivals_Builder.dtos.TeamDTOs;
 
-import com.mrivals_builder.Mrivals_Builder.dtos.HeroDTO;
-import com.mrivals_builder.Mrivals_Builder.dtos.HeroSummaryDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.HeroDTOs.HeroDTO;
 
 import java.time.LocalDate;
 import java.util.List;

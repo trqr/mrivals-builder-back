@@ -1,8 +1,7 @@
 package com.mrivals_builder.Mrivals_Builder.mappers;
 
-import com.mrivals_builder.Mrivals_Builder.dtos.HeroDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.HeroDTOs.HeroDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.TeamDTOs.TeamDTO;
-import com.mrivals_builder.Mrivals_Builder.entities.Hero;
 import com.mrivals_builder.Mrivals_Builder.entities.Team;
 
 import java.util.List;

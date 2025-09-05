@@ -1,16 +1,13 @@
 package com.mrivals_builder.Mrivals_Builder.controllers;
 
-import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.ListedHero;
-import com.mrivals_builder.Mrivals_Builder.dtos.HeroDTO;
-import com.mrivals_builder.Mrivals_Builder.entities.Hero;
+import com.mrivals_builder.Mrivals_Builder.config.annotations.AdminOnly;
+import com.mrivals_builder.Mrivals_Builder.dtos.HeroDTOs.HeroDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.HeroDTOs.HeroMainRoleRequestDTO;
 import com.mrivals_builder.Mrivals_Builder.services.HeroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,5 +31,11 @@ public class HeroController {
     @GetMapping("/{heroId}")
     public ResponseEntity<HeroDTO> getHeroById(@PathVariable Long heroId){
         return new ResponseEntity<>(heroService.getHeroById(heroId), HttpStatus.OK);
+    }
+
+    @PutMapping("/main-role")
+    @AdminOnly
+    public ResponseEntity<List<HeroDTO>> updateMainRole(@RequestBody HeroMainRoleRequestDTO request){
+        return new ResponseEntity<>(heroService.updateMainRole(request), HttpStatus.CREATED);
     }
 }

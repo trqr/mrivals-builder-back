@@ -3,7 +3,8 @@ package com.mrivals_builder.Mrivals_Builder.services;
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroExternalApiDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroStatsExternalApiDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.ListedHero;
-import com.mrivals_builder.Mrivals_Builder.dtos.HeroDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.HeroDTOs.HeroDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.HeroDTOs.HeroMainRoleRequestDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.Hero;
 import com.mrivals_builder.Mrivals_Builder.exceptions.NotFoundException;
 import com.mrivals_builder.Mrivals_Builder.mappers.HeroMapper;
@@ -81,5 +82,34 @@ public class HeroService {
                 .orElseThrow(() -> new NotFoundException("Hero with id " + heroId + " not found"));
 
         return heroMapper.entityToDTO(hero);
+    }
+
+    public List<HeroDTO> updateMainRole(HeroMainRoleRequestDTO request) {
+        List<Hero> heroes = heroRepository.findAllById(request.ids());
+
+        if (request.role().equals("mainTank")) {
+            heroes.forEach(hero -> {
+                    hero.setMainTank(true);
+                    hero.setMainHeal(false);
+            });
+        }
+
+        if (request.role().equals("mainHealer")) {
+            heroes.forEach(hero -> {
+                hero.setMainTank(false);
+                hero.setMainHeal(true);
+            });
+        }
+
+        if (request.role().equals("none")) {
+            heroes.forEach(hero -> {
+                hero.setMainTank(false);
+                hero.setMainHeal(false);
+            });
+        }
+
+        heroRepository.saveAll(heroes);
+
+        return heroes.stream().map(hero -> heroMapper.entityToDTO(hero)).toList();
     }
 }
