@@ -6,7 +6,7 @@ import com.mrivals_builder.Mrivals_Builder.dtos.UserDTOs.UserDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.User;
 import com.mrivals_builder.Mrivals_Builder.exceptions.NotFoundException;
 import com.mrivals_builder.Mrivals_Builder.repositories.UserRepository;
-import com.mrivals_builder.Mrivals_Builder.security.JwtUtil;
+import com.mrivals_builder.Mrivals_Builder.security.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class AuthService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private JwtUtil jwtUtil;
+    private JwtUtils jwtUtils;
 
     public RegisterResponseDTO register(RegisterRequestDTO request){
         if (userRepository.existsByEmail(request.email())){
@@ -38,7 +38,7 @@ public class AuthService {
         created.setPassword(encryptedPassword);
         User saved = userRepository.save(created);
 
-        String token = jwtUtil.generateToken(saved.getEmail(), saved.getRole());
+        String token = jwtUtils.generateToken(saved.getEmail(), saved.getRole());
 
         UserDTO userDTO = new UserDTO(saved);
         RegisterResponseDTO response = new RegisterResponseDTO(token, userDTO);
@@ -52,7 +52,7 @@ public class AuthService {
         if (!passwordEncoder.matches(password, user.getPassword())){
             throw new RuntimeException("Email or password is incorrect. Please try again.");
         } else {
-            String token = jwtUtil.generateToken(email, user.getRole());
+            String token = jwtUtils.generateToken(email, user.getRole());
             return new RegisterResponseDTO(token, new UserDTO(user));
         }
     }

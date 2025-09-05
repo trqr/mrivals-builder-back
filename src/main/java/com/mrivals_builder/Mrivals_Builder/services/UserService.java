@@ -6,8 +6,8 @@ import com.mrivals_builder.Mrivals_Builder.entities.User;
 import com.mrivals_builder.Mrivals_Builder.exceptions.BadRequestException;
 import com.mrivals_builder.Mrivals_Builder.exceptions.NotFoundException;
 import com.mrivals_builder.Mrivals_Builder.repositories.UserRepository;
+import com.mrivals_builder.Mrivals_Builder.security.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -49,8 +49,7 @@ public class UserService {
     }
 
     public UserDTO changeMRAccount(Principal principal, Long id, String accountName) {
-        User currentUser = userRepository.findByEmail(principal.getName())
-                .orElseThrow(() -> new NotFoundException("User not Found!"));
+        User currentUser = getCurrentUser();
 
         if (!currentUser.getId().equals(id))
             throw new BadRequestException("Request not allowed");
@@ -61,8 +60,7 @@ public class UserService {
     }
 
     public UserDTO changePassword(Principal principal, NewPasswordRequestDTO requestDTO) {
-        User currentUser = userRepository.findByEmail(principal.getName())
-                .orElseThrow(() -> new NotFoundException("User not Found!"));
+        User currentUser = getCurrentUser();
 
         if (passwordEncoder.matches(requestDTO.oldPassword(), currentUser.getPassword())){
             currentUser.setPassword(passwordEncoder.encode(requestDTO.newPassword()));
@@ -74,11 +72,16 @@ public class UserService {
     }
 
     public UserDTO changeUsername(Principal principal, String userName) {
-        User currentUser = userRepository.findByEmail(principal.getName())
-                .orElseThrow(() -> new NotFoundException("User not Found!"));
+        User currentUser = getCurrentUser();
 
         currentUser.setUsername(userName);
         userRepository.save(currentUser);
         return new UserDTO(currentUser);
+    }
+
+    private User getCurrentUser(){
+        String email = SecurityUtils.getCurrentUserEmail();
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("User not Found!"));
     }
 }

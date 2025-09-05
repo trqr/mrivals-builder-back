@@ -11,12 +11,12 @@ import java.util.Date;
 
 
 @Component
-public class JwtUtil {
+public class JwtUtils {
 
     private final Algorithm ALGORITHM;
     private final Duration expiration;
 
-    public JwtUtil(
+    public JwtUtils(
             @Value("${app.jwt.secret}") String secret,
             @Value("${app.jwt.expiration}") Duration expiration
     ) {
