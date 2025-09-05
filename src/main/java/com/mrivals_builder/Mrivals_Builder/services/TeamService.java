@@ -105,6 +105,7 @@ public class TeamService {
 
     public List<TeamSynergieDTO> getTeamSynergie(List<Long> heroesIds) {
         List<Synergie> allSynergies = new ArrayList<>();
+
         for(Long heroId : heroesIds) {
             Hero hero = heroRepository.findById(heroId).orElse(null);
             if(hero != null) {
@@ -113,7 +114,11 @@ public class TeamService {
             }
         }
 
-        Map<Hero, Integer> synergieScores = allSynergies.stream()
+        List<Synergie> availableSynergies = allSynergies.stream()
+                .filter(synergie -> !heroesIds.contains(synergie.getAlly().getId()))
+                .toList();
+
+        Map<Hero, Integer> synergieScores = availableSynergies.stream()
                 .collect(Collectors.groupingBy(
                         Synergie::getAlly,
                         Collectors.summingInt(Synergie::getValue)
