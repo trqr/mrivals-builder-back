@@ -93,7 +93,7 @@ public class TeamService {
 
     // 3) Transformer le Map en List<TeamCounter>
     List<TeamCounterDTO> counters = enemyScores.entrySet().stream()
-        .map(entry -> new TeamCounterDTO(entry.getKey().getId(), entry.getValue()))
+        .map(entry -> new TeamCounterDTO(entry.getKey().getId(), entry.getValue(), entry.getKey().getName(), entry.getKey().getImageLink()))
         .collect(Collectors.toList());
 
     // 4) Trier par score
@@ -120,10 +120,10 @@ public class TeamService {
                 ));
 
         List<TeamSynergieDTO> allies = synergieScores.entrySet().stream()
-                .map(entry -> new TeamSynergieDTO(entry.getKey().getId(), entry.getValue()))
+                .map(entry -> new TeamSynergieDTO(entry.getKey().getId(), entry.getValue(), entry.getKey().getName(), entry.getKey().getImageLink()))
                 .collect(Collectors.toList());
 
-        allies.sort(Comparator.comparingInt(TeamSynergieDTO::totalScore));
+        allies.sort(Comparator.comparingInt(TeamSynergieDTO::totalScore).reversed());
 
         return allies.stream().limit(5).toList();
     }

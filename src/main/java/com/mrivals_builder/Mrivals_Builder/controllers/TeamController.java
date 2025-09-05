@@ -32,7 +32,7 @@ public class TeamController {
         return new ResponseEntity<>(teamService.getTeamCounter(heroesIds), HttpStatus.OK);
     }
 
-    @PostMapping("/teamSynergie")
+    @PostMapping("/teamSynergies")
     public ResponseEntity<List<TeamSynergieDTO>> getTeamSynergie(@RequestBody List<Long> heroesIds){
         return new ResponseEntity<>(teamService.getTeamSynergie(heroesIds), HttpStatus.OK);
     }
