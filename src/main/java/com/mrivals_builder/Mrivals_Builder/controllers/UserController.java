@@ -37,8 +37,8 @@ public class UserController {
         return new ResponseEntity<>(userService.changeUsersRoleToUser(ids), HttpStatus.OK);
     }
 
-    @PatchMapping("/mr-account/{id}")
-    public ResponseEntity<UserDTO> changeMRAccount(@PathVariable Long id, @RequestBody String accountName){
+    @PatchMapping("/{id}/mr-account")
+    public ResponseEntity<UserDTO> changeMRAccount(@PathVariable Long id, @RequestParam String accountName){
         return new ResponseEntity<>(userService.changeMRAccount(id, accountName), HttpStatus.OK);
     }
 
@@ -48,7 +48,7 @@ public class UserController {
     }
 
     @PatchMapping("/username")
-    public ResponseEntity<UserDTO> changerUsername(@RequestBody String userName){
+    public ResponseEntity<UserDTO> changerUsername(@RequestParam String userName){
         return new ResponseEntity<>(userService.changeUsername(userName), HttpStatus.OK);
     }
 }
