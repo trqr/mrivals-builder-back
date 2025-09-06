@@ -3,7 +3,7 @@ package com.mrivals_builder.Mrivals_Builder.controllers;
 import com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs.LoginRequestDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs.RegisterRequestDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs.RegisterResponseDTO;
-import com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs.UserDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.UserDTOs.UserDTO;
 import com.mrivals_builder.Mrivals_Builder.services.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

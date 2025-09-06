@@ -10,6 +10,7 @@ import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -40,5 +41,10 @@ public class TeamController {
     @PostMapping("/save")
     public ResponseEntity<TeamDTO> saveCompo(@RequestBody List<Long> heroesIds, @Nullable Principal principal) {
         return new ResponseEntity<>(teamService.saveTeamComposition(heroesIds, principal), HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<TeamDTO>> getUserTeamCompos(Principal principal){
+        return new ResponseEntity<>(teamService.getUserTeamCompos(principal), HttpStatus.OK);
     }
 }
