@@ -4,6 +4,8 @@ import com.mrivals_builder.Mrivals_Builder.config.annotations.AdminOnly;
 import com.mrivals_builder.Mrivals_Builder.dtos.UserDTOs.NewPasswordRequestDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.UserDTOs.UserDTO;
 import com.mrivals_builder.Mrivals_Builder.services.UserService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,12 +45,12 @@ public class UserController {
     }
 
     @PatchMapping("/password")
-    public ResponseEntity<UserDTO> changePassword(@RequestBody NewPasswordRequestDTO requestDTO){
+    public ResponseEntity<UserDTO> changePassword(@Valid @RequestBody NewPasswordRequestDTO requestDTO){
         return new ResponseEntity<>(userService.changePassword(requestDTO), HttpStatus.OK);
     }
 
     @PatchMapping("/username")
-    public ResponseEntity<UserDTO> changerUsername(@RequestParam String userName){
+    public ResponseEntity<UserDTO> changerUsername(@RequestParam @NotBlank String userName){
         return new ResponseEntity<>(userService.changeUsername(userName), HttpStatus.OK);
     }
 }
