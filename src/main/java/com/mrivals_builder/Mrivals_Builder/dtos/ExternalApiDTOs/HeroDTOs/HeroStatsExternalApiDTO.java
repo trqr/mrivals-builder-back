@@ -1,4 +1,4 @@
-package com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs;
+package com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroDTOs;
 
 public record HeroStatsExternalApiDTO(
         Long heroId,

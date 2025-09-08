@@ -1,7 +1,7 @@
 package com.mrivals_builder.Mrivals_Builder.mappers;
 
 
-import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.MapExternalApiDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.MapDTOs.MapExternalApiDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.Map;
 import com.mrivals_builder.Mrivals_Builder.entities.MapImage;
 import com.mrivals_builder.Mrivals_Builder.repositories.MapImageRepository;

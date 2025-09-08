@@ -37,13 +37,14 @@ public class Hero {
     private List<Ability> abilities;
 
     @OneToMany(mappedBy = "hero")
-    @JsonManagedReference
     private List<Synergie> synergies;
 
     @OneToMany(mappedBy = "hero")
     private List<MatchUp> matchUps;
 
     @ManyToMany(mappedBy = "heroes")
-    @JsonIgnore
     private List<Team> teams;
+
+    @OneToMany(mappedBy = "hero")
+    private List<LeaderboardPlayer> players;
 }
