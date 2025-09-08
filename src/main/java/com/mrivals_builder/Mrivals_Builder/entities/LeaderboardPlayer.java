@@ -19,7 +19,7 @@ public class LeaderboardPlayer {
 
     private double rankScore;
     private double maxRankScore;
-    private double seasonWinCount;
+    private int seasonWinCount;
 
     @ManyToOne
     private Hero hero;

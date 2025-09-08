@@ -1,9 +1,10 @@
 package com.mrivals_builder.Mrivals_Builder.services;
 
-import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.*;
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroDTOs.HeroExternalApiDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroDTOs.HeroStatsExternalApiDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroDTOs.ListedHero;
+import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.MapDTOs.MapApiResponse;
+import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.MapDTOs.MapExternalApiDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
