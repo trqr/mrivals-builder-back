@@ -2,8 +2,8 @@ package com.mrivals_builder.Mrivals_Builder.mappers;
 
 
 import com.mrivals_builder.Mrivals_Builder.dtos.AbilityDTO;
-import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.AbilityExternalApiDTO;
-import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroExternalApiDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroDTOs.AbilityExternalApiDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroDTOs.HeroExternalApiDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.HeroDTOs.HeroDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.MatchUpDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.SynergieDTO;

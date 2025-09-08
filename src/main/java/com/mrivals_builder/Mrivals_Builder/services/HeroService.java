@@ -1,8 +1,8 @@
 package com.mrivals_builder.Mrivals_Builder.services;
 
-import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroExternalApiDTO;
-import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroStatsExternalApiDTO;
-import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.ListedHero;
+import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroDTOs.HeroExternalApiDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroDTOs.HeroStatsExternalApiDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroDTOs.ListedHero;
 import com.mrivals_builder.Mrivals_Builder.dtos.HeroDTOs.HeroDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.HeroDTOs.HeroMainRoleRequestDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.Hero;
