@@ -12,6 +12,8 @@ import com.mrivals_builder.Mrivals_Builder.mappers.LeaderboardMapper;
 import com.mrivals_builder.Mrivals_Builder.repositories.HeroRepository;
 import com.mrivals_builder.Mrivals_Builder.repositories.LeaderboardPlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,14 +37,14 @@ public class LeaderboardService {
         return heroList.stream().flatMap(hero -> fetchAndSaveHeroLeaderboard(hero.id()).stream()).toList();
     }
 
-    public LeaderboardResponseDTO getHeroLeaderboard(Long heroId){
+    public LeaderboardResponseDTO getHeroLeaderboard(Long heroId, int page, int size){
 
         Hero hero = heroRepository.findById(heroId)
                 .orElseThrow(() -> new NotFoundException("Hero ID " + heroId + " not found"));
         HeroSummaryDTO heroDTO = new HeroSummaryDTO(hero.getId(), hero.getName(), hero.getImageLink());
 
-        List<LeaderboardPlayer> players = leaderboardRepository.findByHero(hero);
-        List<LeaderboardPlayerDTO> playersDTOs = players.stream().map(player -> leaderboardMapper.entityToDTO(player)).toList();
+        Page<LeaderboardPlayer> players = leaderboardRepository.findByHero(hero, PageRequest.of(page, size));
+        List<LeaderboardPlayerDTO> playersDTOs = players.getContent().stream().map(player -> leaderboardMapper.entityToDTO(player)).toList();
 
         return new LeaderboardResponseDTO(heroDTO, playersDTOs);
     }

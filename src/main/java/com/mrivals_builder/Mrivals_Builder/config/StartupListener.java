@@ -13,7 +13,6 @@ public class StartupListener {
     @Autowired
     private LeaderboardService leaderboardService;
 
-
     @EventListener(ApplicationReadyEvent.class)
     public void onApplicationReady() {
         leaderboardService.fetchAndSaveAllLeaderboards();
