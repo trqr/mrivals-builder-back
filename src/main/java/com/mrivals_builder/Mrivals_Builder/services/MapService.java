@@ -28,6 +28,8 @@ public class MapService {
     private MapMapper mapMapper;
 
     public List<Map> getAllMapsFromApi() {
+        mapImageRepository.deleteAll();
+        mapRepository.deleteAll();
         List<MapExternalApiDTO> dtos = extApiService.getMapsFromApi();
 
         List<Map> maps = dtos.stream()
