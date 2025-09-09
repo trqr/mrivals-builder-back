@@ -84,4 +84,13 @@ public class UserService {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("User not Found!"));
     }
+
+    public List<UserDTO> banUsers(List<Long> ids) {
+        List<User> users = userRepository.findAllById(ids);
+
+        users.forEach(user -> user.setBanned(true));
+
+        userRepository.saveAll(users);
+        return users.stream().map(user -> new UserDTO(user)).toList();
+    }
 }

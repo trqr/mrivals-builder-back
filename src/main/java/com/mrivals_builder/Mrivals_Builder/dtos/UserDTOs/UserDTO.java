@@ -13,6 +13,7 @@ public class UserDTO {
     private String email;
     private String mrivalsAccount;
     private String role;
+    private boolean banned;
 
 
     public UserDTO(User user){
@@ -21,5 +22,6 @@ public class UserDTO {
         this.email = user.getEmail();
         this.mrivalsAccount = user.getMrivalsAccount();
         this.role = user.getRole();
+        this.banned = user.isBanned();
     }
 }

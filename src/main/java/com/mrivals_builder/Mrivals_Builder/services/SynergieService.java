@@ -9,6 +9,7 @@ import com.mrivals_builder.Mrivals_Builder.mappers.SynergieMapper;
 import com.mrivals_builder.Mrivals_Builder.repositories.HeroRepository;
 import com.mrivals_builder.Mrivals_Builder.repositories.SynergieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -56,5 +57,11 @@ public class SynergieService {
         synergieRepository.save(updated);
 
         return SynergieMapper.entityToDTO(updated);
+    }
+
+    public ResponseEntity<Void> deleteSynergie(Long id) {
+        if (!synergieRepository.existsById(id)) {return ResponseEntity.notFound().build();}
+        synergieRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

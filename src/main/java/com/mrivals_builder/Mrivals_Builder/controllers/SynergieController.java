@@ -27,4 +27,10 @@ public class SynergieController {
     public ResponseEntity<SynergieDTO> updateSynergie(@PathVariable Long id, @RequestBody SynergieRequestDTO requestDTO){
         return new ResponseEntity<>(synergieService.updateSynergie(id, requestDTO), HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/{id}")
+    @AdminOnly
+    public ResponseEntity<Void> deleteSynergie(@PathVariable Long id){
+        return synergieService.deleteSynergie(id);
+    }
 }

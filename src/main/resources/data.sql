@@ -850,10 +850,10 @@ values  (true, 28, 9, 1, 2),
         (true, 37, 35, 165, 2),
         (false, 24, 35, 166, 1);
 
-INSERT INTO mrivals_builder_db.user (id, username, email, mrivals_account, password, role) values
-(1, 'White', 'killian@example.com', 'White_kb', '$2a$10$A2r5X8ujFxLYRadoWzT/lO30ybr7UqeYmbOFCpjrYymXZmVbEdqr2', 'USER'),
-(2, 'Trqr', 'tristan@example.com', 'TrqR', '$2a$10$U/oTCNKnVY6EWY8925uhXOdtGpsHeUOZyEcRlwIxjVQBdVdjJggMy', 'ADMIN'),
-(3, 'Yusuf', 'yusuf@example.com', 'yusuf', '$2a$10$U/oTCNKnVY6EWY8925uhXOdtGpsHeUOZyEcRlwIxjVQBdVdjJggMy', 'USER'),
-(4, 'Saïd', 'said@example.com', 'Sathor41', '$2a$10$U/oTCNKnVY6EWY8925uhXOdtGpsHeUOZyEcRlwIxjVQBdVdjJggMy', 'USER');
+INSERT INTO mrivals_builder_db.user (id, username, email, mrivals_account, password, role, is_banned) values
+(1, 'White', 'killian@example.com', 'White_kb', '$2a$10$A2r5X8ujFxLYRadoWzT/lO30ybr7UqeYmbOFCpjrYymXZmVbEdqr2', 'USER', false),
+(2, 'Trqr', 'tristan@example.com', 'TrqR', '$2a$10$U/oTCNKnVY6EWY8925uhXOdtGpsHeUOZyEcRlwIxjVQBdVdjJggMy', 'ADMIN', false),
+(3, 'Yusuf', 'yusuf@example.com', 'yusuf', '$2a$10$U/oTCNKnVY6EWY8925uhXOdtGpsHeUOZyEcRlwIxjVQBdVdjJggMy', 'USER', false),
+(4, 'Saïd', 'said@example.com', 'Sathor41', '$2a$10$U/oTCNKnVY6EWY8925uhXOdtGpsHeUOZyEcRlwIxjVQBdVdjJggMy', 'USER', true);
 
 

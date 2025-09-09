@@ -39,6 +39,12 @@ public class UserController {
         return new ResponseEntity<>(userService.changeUsersRoleToUser(ids), HttpStatus.OK);
     }
 
+    @PutMapping("/ban")
+    @AdminOnly
+    public ResponseEntity<List<UserDTO>> banUsers(@RequestBody List<Long> ids){
+        return new ResponseEntity<>(userService.banUsers(ids), HttpStatus.OK);
+    }
+
     @PatchMapping("/{id}/mr-account")
     public ResponseEntity<UserDTO> changeMRAccount(@PathVariable Long id, @RequestParam String accountName){
         return new ResponseEntity<>(userService.changeMRAccount(id, accountName), HttpStatus.OK);

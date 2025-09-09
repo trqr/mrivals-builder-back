@@ -51,7 +51,9 @@ public class AuthService {
                 .orElseThrow(() -> new NotFoundException("Email or password is incorrect. Please try again."));
         if (!passwordEncoder.matches(password, user.getPassword())){
             throw new RuntimeException("Email or password is incorrect. Please try again.");
-        } else {
+        } else if (user.isBanned())
+            throw new RuntimeException("Your account has been banned. Please contact admins.");
+        else {
             String token = jwtUtils.generateToken(email, user.getRole());
             return new RegisterResponseDTO(token, new UserDTO(user));
         }
