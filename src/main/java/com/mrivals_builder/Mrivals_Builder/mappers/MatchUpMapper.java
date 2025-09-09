@@ -8,15 +8,19 @@ import java.util.List;
 
 public class MatchUpMapper {
 
-    public static List<MatchUpDTO> entityToDTO(List<MatchUp> matchUps) {
+    public static List<MatchUpDTO> ListEntityToDTO(List<MatchUp> matchUps) {
         if (matchUps == null) return List.of();
 
-        return matchUps.stream().map(matchUp -> new MatchUpDTO(
-                matchUp.getId(),
-                matchUp.getHero().getId(),
-                new HeroSummaryDTO(matchUp.getCounterPick().getId(), matchUp.getCounterPick().getName(), matchUp.getCounterPick().getImageLink()),
-                matchUp.getValue()
-                )
+        return matchUps.stream().map(MatchUpMapper::entityToDTO
         ).toList();
+    }
+
+    public static MatchUpDTO entityToDTO(MatchUp entity){
+        return new MatchUpDTO(
+                entity.getId(),
+                entity.getHero().getId(),
+                new HeroSummaryDTO(entity.getCounterPick().getId(), entity.getCounterPick().getName(), entity.getCounterPick().getImageLink()),
+                entity.getValue()
+        );
     }
 }

@@ -34,6 +34,7 @@ public class LeaderboardService {
 
     public List<LeaderboardPlayer> fetchAndSaveAllLeaderboards(){
         List<ListedHero> heroList = externalApiService.getHeroListFromApi();
+        leaderboardRepository.deleteAll();
         return heroList.stream().flatMap(hero -> fetchAndSaveHeroLeaderboard(hero.id()).stream()).toList();
     }
 
