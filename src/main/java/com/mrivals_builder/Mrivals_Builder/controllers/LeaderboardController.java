@@ -1,5 +1,6 @@
 package com.mrivals_builder.Mrivals_Builder.controllers;
 
+import com.mrivals_builder.Mrivals_Builder.dtos.LeaderboardDTOs.LeaderboardPlayerDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.LeaderboardDTOs.LeaderboardResponseDTO;
 import com.mrivals_builder.Mrivals_Builder.services.LeaderboardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,13 @@ public class LeaderboardController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "50") int size) {
         return new ResponseEntity<>(leaderboardService.getHeroLeaderboard(heroId, page, size), HttpStatus.OK);
-  }
+    }
+
+
+    @GetMapping("/update")
+    public ResponseEntity<String> updateLeaderboards(){
+        leaderboardService.fetchAndSaveAllLeaderboards();
+        return new ResponseEntity<>("Updated", HttpStatus.OK);
+    }
+
 }
