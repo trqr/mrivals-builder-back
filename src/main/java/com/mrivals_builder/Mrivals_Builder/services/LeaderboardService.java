@@ -35,7 +35,17 @@ public class LeaderboardService {
     public List<LeaderboardPlayer> fetchAndSaveAllLeaderboards(){
         List<ListedHero> heroList = externalApiService.getHeroListFromApi();
         leaderboardRepository.deleteAll();
-        return heroList.stream().flatMap(hero -> fetchAndSaveHeroLeaderboard(hero.id()).stream()).toList();
+        return heroList.stream()
+                .flatMap(hero -> {
+                    List<LeaderboardPlayer> players = fetchAndSaveHeroLeaderboard(hero.id());
+                    try {
+                        Thread.sleep(300);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                    return players.stream();
+                })
+                .toList();
     }
 
     public LeaderboardResponseDTO getHeroLeaderboard(Long heroId, int page, int size){
