@@ -11,6 +11,7 @@ import com.mrivals_builder.Mrivals_Builder.mappers.HeroMapper;
 import com.mrivals_builder.Mrivals_Builder.mappers.TeamMapper;
 import com.mrivals_builder.Mrivals_Builder.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
@@ -161,5 +162,16 @@ public class TeamService {
         List<Team> teams = teamRepository.findAllByUser(currentUser);
 
         return teams.stream().map(team -> TeamMapper.entityToDTO(team)).toList();
+    }
+
+    public ResponseEntity<Void> deleteTeam(Long id) {
+        if (!teamRepository.existsById(id)) {return ResponseEntity.notFound().build();}
+        teamRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    public ResponseEntity<Void> deleteAllTeams(Long id) {
+        teamRepository.deleteAll();
+        return ResponseEntity.noContent().build();
     }
 }
