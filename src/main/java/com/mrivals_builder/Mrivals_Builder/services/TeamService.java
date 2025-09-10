@@ -170,7 +170,7 @@ public class TeamService {
         return ResponseEntity.noContent().build();
     }
 
-    public ResponseEntity<Void> deleteAllTeams(Long id) {
+    public ResponseEntity<Void> deleteAllTeams(List<TeamDTO>) {
         teamRepository.deleteAll();
         return ResponseEntity.noContent().build();
     }

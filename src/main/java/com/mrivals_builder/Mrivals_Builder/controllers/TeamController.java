@@ -47,4 +47,12 @@ public class TeamController {
     public ResponseEntity<List<TeamDTO>> getUserTeamCompos(Principal principal){
         return new ResponseEntity<>(teamService.getUserTeamCompos(principal), HttpStatus.OK);
     }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteTeam(@PathVariable Long id) {return teamService.deleteTeam(id);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteAllTeam(@RequestBody List<TeamDTO>) {return teamService.deleteAllTeams();
+    }
 }
