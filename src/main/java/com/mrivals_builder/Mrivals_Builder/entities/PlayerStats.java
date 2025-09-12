@@ -9,20 +9,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Ability {
-
+public class PlayerStats {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long externalId;
-    private String name;
-    private String type;
-    private boolean collab;
-    @Column(columnDefinition = "TEXT")
-    private String description;
-    private String icon;
 
-    @ManyToOne
-    @JoinColumn(name = "hero_id")
-    private Hero hero;
+    private Long userId;
+
+    @Column(columnDefinition = "LONGTEXT")
+    private String statsRawJson;
 }
