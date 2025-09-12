@@ -141,12 +141,22 @@ public class ExternalApiService {
     }
 
     public String fetchUserPlayerStats(String rivalsAccount){
-        String url = "https://api.externe.com/data";
+        String url = baseUrl + "/player/" + rivalsAccount;
         HttpHeaders headers = new HttpHeaders();
         headers.set("x-api-key", apiKey);
         HttpEntity<Void> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+        System.out.println(response.getBody());
+        return response.getBody();
+    }
 
+    public String updatePlayerStats(String rivalsAccount){
+        String url = baseUrl + "/player/" + rivalsAccount + "/update";
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("x-api-key", apiKey);
+        HttpEntity<Void> entity = new HttpEntity<>(headers);
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+        System.out.println(response.getBody());
         return response.getBody();
     }
 }

@@ -20,10 +20,7 @@ public class PlayerStatsService {
     private PlayerStatsRepository playerStatsRepository;
 
     public PlayerStats saveUserPlayerStats(){
-
-        String email = SecurityUtils.getCurrentUserEmail();
-        User currentUser = userRepository.findByEmail(email)
-                .orElseThrow(() -> new NotFoundException("User not Found!"));
+    User currentUser = getCurrentUser();
 
         String statsRawJson = externalApiService.fetchUserPlayerStats(currentUser.getMrivalsAccount());
 
@@ -31,5 +28,22 @@ public class PlayerStatsService {
         createdOrUpdated.setUserId(currentUser.getId());
         createdOrUpdated.setStatsRawJson(statsRawJson);
         return playerStatsRepository.save(createdOrUpdated);
+    }
+
+    public String updatePlayerStats() {
+        return externalApiService.updatePlayerStats(getCurrentUser().getMrivalsAccount());
+    }
+
+    public PlayerStats getUserPlayerStats() {
+        User currentUser = getCurrentUser();
+
+        return playerStatsRepository.findByUserId(currentUser.getId())
+                .orElseThrow(() -> new NotFoundException("Player stats for User ID " + currentUser.getId() + " not found."));
+    }
+
+    private User getCurrentUser(){
+        String email = SecurityUtils.getCurrentUserEmail();
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("User not Found!"));
     }
 }
