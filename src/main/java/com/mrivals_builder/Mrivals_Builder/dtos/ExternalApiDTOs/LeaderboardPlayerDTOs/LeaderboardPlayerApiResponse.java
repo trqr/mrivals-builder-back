@@ -10,4 +10,5 @@ public record LeaderboardPlayerApiResponse(
         int assists,
         int mvps,
         int svps
-) {}
+) {
+}

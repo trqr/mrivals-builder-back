@@ -22,6 +22,7 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
     public List<UserDTO> getAllUsers() {
         List<User> users = userRepository.findAll();
 
