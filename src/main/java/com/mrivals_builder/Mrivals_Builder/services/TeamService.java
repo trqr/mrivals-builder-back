@@ -75,38 +75,64 @@ public class TeamService {
     }
 
     public List<TeamCounterDTO> getTeamCounter(List<Long> heroesIds) {
-    // 1) Charger tout les matchups des héros de la compo
-    List<MatchUp> allMatchups = new ArrayList<>();
-    for (Long heroId : heroesIds) {
-        Hero hero = heroRepository.findById(heroId).orElse(null);
-        if (hero != null) {
-            List<MatchUp> heroMatchups = matchUpRepository.findByHero(hero);
-            allMatchups.addAll(heroMatchups);
-        }
+
+        List<MatchUp> allMatchups = getCompoHeroesMatchups(heroesIds );
+
+        Map<Hero, Integer> enemyScores = getEnemyMatchUpScores(allMatchups);
+
+        List<TeamCounterDTO> counters = getListCounter(enemyScores);
+
+        counters.sort(Comparator.comparingInt(TeamCounterDTO::totalScore));
+
+        return counters.stream().limit(5).toList();
     }
 
-    // 2) Regrouper par counter et aditionner les valeurs
-    Map<Hero, Integer> enemyScores = allMatchups.stream()
-        .collect(Collectors.groupingBy(
-            MatchUp::getCounterPick,
-            Collectors.summingInt(MatchUp::getValue)
-        ));
+    private List<MatchUp> getCompoHeroesMatchups (List<Long> heroesIds ) {
+        List<MatchUp> allMatchups = new ArrayList<>();
+        for (Long heroId : heroesIds) {
+            Hero hero = heroRepository.findById(heroId).orElse(null);
+            if (hero != null) {
+                List<MatchUp> heroMatchups = matchUpRepository.findByHero(hero);
+                allMatchups.addAll(heroMatchups);
+            }
+        }
+        return allMatchups;
+    }
 
-    // 3) Transformer le Map en List<TeamCounter>
-    List<TeamCounterDTO> counters = enemyScores.entrySet().stream()
-        .map(entry -> new TeamCounterDTO(entry.getKey().getId(), entry.getValue(), entry.getKey().getName(), entry.getKey().getImageLink()))
-        .collect(Collectors.toList());
+    private Map<Hero, Integer> getEnemyMatchUpScores (List<MatchUp> allMatchups) {
+        return allMatchups.stream()
+                .collect(Collectors.groupingBy(
+                        MatchUp::getCounterPick,
+                        Collectors.summingInt(MatchUp::getValue)
+                ));
+    }
 
-    // 4) Trier par score
-    counters.sort(Comparator.comparingInt(TeamCounterDTO::totalScore));
-
-    // 5) retourner les 5 pires contre
-    return counters.stream().limit(5).toList();
+    private List<TeamCounterDTO> getListCounter (Map<Hero, Integer> enemyScores) {
+        return enemyScores.entrySet().stream()
+                .map(entry -> new TeamCounterDTO(
+                        entry.getKey().getId(),
+                        entry.getValue(),
+                        entry.getKey().getName(),
+                        entry.getKey().getImageLink()
+                ))
+                .collect(Collectors.toList());
     }
 
     public List<TeamSynergieDTO> getTeamSynergie(List<Long> heroesIds) {
-        List<Synergie> allSynergies = new ArrayList<>();
 
+        List<Synergie> allSynergies = getCompoHeroesSynergie(heroesIds);
+
+        Map<Hero, Integer> synergiesScores = getAllySynergiesScores(allSynergies, heroesIds);
+
+        List<TeamSynergieDTO> allies = getListSynergies(synergiesScores);
+
+        allies.sort(Comparator.comparingInt(TeamSynergieDTO::totalScore).reversed());
+
+        return allies.stream().limit(5).toList();
+    }
+
+    private List<Synergie> getCompoHeroesSynergie (List<Long> heroesIds) {
+        List<Synergie> allSynergies = new ArrayList<>();
         for(Long heroId : heroesIds) {
             Hero hero = heroRepository.findById(heroId).orElse(null);
             if(hero != null) {
@@ -114,24 +140,27 @@ public class TeamService {
                 allSynergies.addAll(heroSynergies);
             }
         }
+        return allSynergies;
+    }
 
-        List<Synergie> availableSynergies = allSynergies.stream()
+    private Map<Hero, Integer> getAllySynergiesScores(List<Synergie> allSynergies, List<Long> heroesIds) {
+        return allSynergies.stream()
                 .filter(synergie -> !heroesIds.contains(synergie.getAlly().getId()))
-                .toList();
-
-        Map<Hero, Integer> synergieScores = availableSynergies.stream()
                 .collect(Collectors.groupingBy(
                         Synergie::getAlly,
                         Collectors.summingInt(Synergie::getValue)
                 ));
+    }
 
-        List<TeamSynergieDTO> allies = synergieScores.entrySet().stream()
-                .map(entry -> new TeamSynergieDTO(entry.getKey().getId(), entry.getValue(), entry.getKey().getName(), entry.getKey().getImageLink()))
+    private List<TeamSynergieDTO> getListSynergies (Map<Hero, Integer> synergiesScores) {
+        return synergiesScores.entrySet().stream()
+                .map(entry -> new TeamSynergieDTO(
+                        entry.getKey().getId(),
+                        entry.getValue(),
+                        entry.getKey().getName(),
+                        entry.getKey().getImageLink()
+                ))
                 .collect(Collectors.toList());
-
-        allies.sort(Comparator.comparingInt(TeamSynergieDTO::totalScore).reversed());
-
-        return allies.stream().limit(5).toList();
     }
 
     public TeamDTO saveTeamComposition(List<Long> heroesIds, Principal principal) {
