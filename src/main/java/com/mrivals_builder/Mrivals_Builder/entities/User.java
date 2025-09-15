@@ -26,4 +26,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Team> teams;
 
+    @OneToMany(mappedBy = "user")
+    private List<MarvelRivalsAccount> playerStats;
+
 }
