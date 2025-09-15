@@ -38,7 +38,10 @@ public class MarvelRivalsAccountService {
     }
 
     public String updatePlayerStats() {
-        return externalApiService.updatePlayerStats(getCurrentUser().getMrivalsAccount());
+        User currentUser = getCurrentUser();
+
+        currentUser.getPlayerStats().forEach(account -> externalApiService.updatePlayerStats(account.getMrivalsAccount()));
+        return "Updated in the next 30 minutes.";
     }
 
     public MarvelRivalsAccountDTO getUserAccount(Long id) {

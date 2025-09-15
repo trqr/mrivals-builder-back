@@ -1,10 +1,13 @@
 package com.mrivals_builder.Mrivals_Builder.services;
 
+import com.mrivals_builder.Mrivals_Builder.dtos.MarvelRivalsAccountDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.UserDTOs.NewPasswordRequestDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.UserDTOs.UserDTO;
+import com.mrivals_builder.Mrivals_Builder.entities.MarvelRivalsAccount;
 import com.mrivals_builder.Mrivals_Builder.entities.User;
 import com.mrivals_builder.Mrivals_Builder.exceptions.BadRequestException;
 import com.mrivals_builder.Mrivals_Builder.exceptions.NotFoundException;
+import com.mrivals_builder.Mrivals_Builder.repositories.MarvelRivalsAccountRepository;
 import com.mrivals_builder.Mrivals_Builder.repositories.UserRepository;
 import com.mrivals_builder.Mrivals_Builder.security.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,8 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private MarvelRivalsAccountRepository marvelRivalsAccountRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -49,15 +54,14 @@ public class UserService {
         return users.stream().map(user -> new UserDTO(user)).toList();
     }
 
-    public UserDTO changeMRAccount(Long id, String accountName) {
+    public MarvelRivalsAccountDTO changeMRAccount(Long accountId, String accountName) {
         User currentUser = getCurrentUser();
 
-        if (!currentUser.getId().equals(id))
-            throw new BadRequestException("Request not allowed");
-
-        currentUser.setMrivalsAccount(accountName);
-        userRepository.save(currentUser);
-        return new UserDTO(currentUser);
+        MarvelRivalsAccount account = marvelRivalsAccountRepository.findById(accountId)
+                .orElseThrow(() -> new NotFoundException("Account ID " + accountId + " not found"));
+        account.setMrivalsAccount(accountName);
+        marvelRivalsAccountRepository.save(account);
+        return new MarvelRivalsAccountDTO(account);
     }
 
     public UserDTO changePassword(NewPasswordRequestDTO requestDTO) {

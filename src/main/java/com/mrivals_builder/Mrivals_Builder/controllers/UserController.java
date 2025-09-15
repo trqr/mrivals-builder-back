@@ -1,6 +1,7 @@
 package com.mrivals_builder.Mrivals_Builder.controllers;
 
 import com.mrivals_builder.Mrivals_Builder.config.annotations.AdminOnly;
+import com.mrivals_builder.Mrivals_Builder.dtos.MarvelRivalsAccountDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.UserDTOs.NewPasswordRequestDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.UserDTOs.UserDTO;
 import com.mrivals_builder.Mrivals_Builder.services.UserService;
@@ -45,9 +46,9 @@ public class UserController {
         return new ResponseEntity<>(userService.banUsers(ids), HttpStatus.OK);
     }
 
-    @PatchMapping("/{id}/mr-account")
-    public ResponseEntity<UserDTO> changeMRAccount(@PathVariable Long id, @RequestParam String accountName){
-        return new ResponseEntity<>(userService.changeMRAccount(id, accountName), HttpStatus.OK);
+    @PatchMapping("/mr-account/{accountId}")
+    public ResponseEntity<MarvelRivalsAccountDTO> changeMRAccount(@PathVariable Long accountId, @RequestParam String accountName){
+        return new ResponseEntity<>(userService.changeMRAccount(accountId, accountName), HttpStatus.OK);
     }
 
     @PatchMapping("/password")
