@@ -3,6 +3,7 @@ package com.mrivals_builder.Mrivals_Builder.services;
 import com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs.RegisterRequestDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs.RegisterResponseDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.UserDTOs.UserDTO;
+import com.mrivals_builder.Mrivals_Builder.entities.MarvelRivalsAccount;
 import com.mrivals_builder.Mrivals_Builder.entities.User;
 import com.mrivals_builder.Mrivals_Builder.exceptions.NotFoundException;
 import com.mrivals_builder.Mrivals_Builder.repositories.UserRepository;
@@ -30,10 +31,8 @@ public class AuthService {
             throw new RuntimeException("Email already exists");
         }
         String encryptedPassword = passwordEncoder.encode(request.password());
-
         User created = new User();
         created.setEmail(request.email());
-        created.setMrivalsAccount(request.mrivalsAccount());
         created.setUsername(request.username());
         created.setPassword(encryptedPassword);
         User saved = userRepository.save(created);

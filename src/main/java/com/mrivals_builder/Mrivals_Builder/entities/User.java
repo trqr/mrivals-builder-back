@@ -17,7 +17,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
-    private String mrivalsAccount;
     private String email;
     private String password;
     private String role = "USER";
@@ -25,5 +24,8 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Team> teams;
+
+    @OneToMany(mappedBy = "user")
+    private List<MarvelRivalsAccount> playerStats;
 
 }

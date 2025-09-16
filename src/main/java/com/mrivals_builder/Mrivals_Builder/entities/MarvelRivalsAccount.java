@@ -9,12 +9,16 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PlayerStats {
+public class MarvelRivalsAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
+    @ManyToOne
+    private User user;
+
+    @Column(unique = true)
+    private String mrivalsAccount;
 
     @Column(columnDefinition = "LONGTEXT")
     private String statsRawJson;
