@@ -55,4 +55,10 @@ public class TeamController {
     @DeleteMapping("/all")
     public ResponseEntity<Void> deleteAllTeam() {return teamService.deleteAllTeams();
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TeamDTO> getTeamById(@PathVariable Long id) {
+        return new ResponseEntity<>(teamService.getTeamById(id), HttpStatus.OK);
+    }
+
 }
