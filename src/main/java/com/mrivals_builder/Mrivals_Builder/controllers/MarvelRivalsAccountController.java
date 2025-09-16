@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/player-stats")
+@RequestMapping("/mr-accounts")
 public class MarvelRivalsAccountController {
 
     @Autowired
     private MarvelRivalsAccountService marvelRivalsAccountService;
 
-    @PostMapping("/save/{mrivalsAccount}")
+    @PostMapping("/add/{mrivalsAccount}")
     public ResponseEntity<MarvelRivalsAccountDTO> saveUserPlayerStats(@PathVariable String mrivalsAccount){
-        return new ResponseEntity<>(marvelRivalsAccountService.saveUserPlayerStats(mrivalsAccount), HttpStatus.CREATED);
+        return new ResponseEntity<>(marvelRivalsAccountService.addUserAccount(mrivalsAccount), HttpStatus.CREATED);
     }
 
     @GetMapping("/{accountId}")
@@ -32,7 +32,12 @@ public class MarvelRivalsAccountController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity<String> updatePlayerStats(){
-        return new ResponseEntity<>(marvelRivalsAccountService.updatePlayerStats(), HttpStatus.CREATED);
+    public ResponseEntity<String> updateAccounts(){
+        return new ResponseEntity<>(marvelRivalsAccountService.updateAccounts(), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{accountId}")
+    public ResponseEntity<String> deleteAccount(@PathVariable Long accountId){
+        return new ResponseEntity<>(marvelRivalsAccountService.deleteAccount(accountId), HttpStatus.NO_CONTENT);
     }
 }

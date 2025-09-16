@@ -22,7 +22,7 @@ public class MarvelRivalsAccountService {
     @Autowired
     private MarvelRivalsAccountRepository marvelRivalsAccountRepository;
 
-    public MarvelRivalsAccountDTO saveUserPlayerStats(String mrivalsAccount){
+    public MarvelRivalsAccountDTO addUserAccount(String mrivalsAccount){
     User currentUser = getCurrentUser();
 
         String statsRawJson = externalApiService.fetchUserPlayerStats(mrivalsAccount);
@@ -37,7 +37,7 @@ public class MarvelRivalsAccountService {
         return new MarvelRivalsAccountDTO(createdOrUpdated);
     }
 
-    public String updatePlayerStats() {
+    public String updateAccounts() {
         User currentUser = getCurrentUser();
 
         currentUser.getPlayerStats().forEach(account -> externalApiService.updatePlayerStats(account.getMrivalsAccount()));
@@ -64,5 +64,18 @@ public class MarvelRivalsAccountService {
         String email = SecurityUtils.getCurrentUserEmail();
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("User not Found!"));
+    }
+
+    public String deleteAccount(Long accountId) {
+        MarvelRivalsAccount account = marvelRivalsAccountRepository.findById(accountId)
+                .orElseThrow(() -> new NotFoundException("Account with id " + accountId + " not found"));
+
+        if (account.getUser().getEmail().equals(SecurityUtils.getCurrentUserEmail())){
+            marvelRivalsAccountRepository.delete(account);
+        } else {
+            throw new RuntimeException("You can't delete this account!");
+        }
+
+        return "Successfully deleted account with id " + accountId;
     }
 }
