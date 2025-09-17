@@ -40,6 +40,13 @@ public class TeamService {
     @Autowired
     private SynergieRepository synergieRepository;
 
+    private final TeamMapper teamMapper;
+
+    @Autowired
+    public TeamService(TeamMapper teamMapper) {
+        this.teamMapper = teamMapper;
+    }
+
     public List<BestWinRateByRoleDTO> getBestWinRateByRole(List<Long> heroesIds){
         List<Hero> teamHeroes = heroRepository.findAllById(heroesIds);
 
@@ -202,5 +209,11 @@ public class TeamService {
     public ResponseEntity<Void> deleteAllTeams() {
         teamRepository.deleteAll();
         return ResponseEntity.noContent().build();
+    }
+
+    public TeamDTO getTeamById(Long id) {
+        Team team = teamRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Team with id" + id + "not foud"));
+        return teamMapper.entityToDTO(team);
     }
 }

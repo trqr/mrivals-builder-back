@@ -3,9 +3,11 @@ package com.mrivals_builder.Mrivals_Builder.mappers;
 import com.mrivals_builder.Mrivals_Builder.dtos.HeroDTOs.HeroDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.TeamDTOs.TeamDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.Team;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class TeamMapper {
 
     public static TeamDTO entityToDTO(Team team){
@@ -18,6 +20,6 @@ public class TeamMapper {
                 team.getId(),
                 team.getCreatedDate(),
                 heroes,
-                team.getUser().getId());
+                team.getUser() != null ? team.getUser().getId() : null);
     }
 }
