@@ -1,5 +1,7 @@
 package com.mrivals_builder.Mrivals_Builder.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.mrivals_builder.Mrivals_Builder.dtos.MarvelRivalsAccountDTOs.AccountUpdateResponseDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.MarvelRivalsAccountDTOs.MarvelRivalsAccountDTO;
 import com.mrivals_builder.Mrivals_Builder.services.MarvelRivalsAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +33,9 @@ public class MarvelRivalsAccountController {
         return new ResponseEntity<>(marvelRivalsAccountService.getUserAllAccounts(), HttpStatus.CREATED);
     }
 
-    @PostMapping("/update")
-    public ResponseEntity<String> updateAccounts(){
-        return new ResponseEntity<>(marvelRivalsAccountService.updateAccounts(), HttpStatus.CREATED);
+    @PostMapping("/update/{accountId}")
+    public ResponseEntity<AccountUpdateResponseDTO> updateAccount(@PathVariable Long accountId) throws JsonProcessingException {
+        return new ResponseEntity<>(marvelRivalsAccountService.updateAccount(accountId), HttpStatus.OK);
     }
 
     @DeleteMapping("/{accountId}")

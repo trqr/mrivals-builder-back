@@ -1,4 +1,4 @@
 package com.mrivals_builder.Mrivals_Builder.dtos.MarvelRivalsAccountDTOs;
 
-public class AccountUpdateResponseDTO {
+public record AccountUpdateResponseDTO(boolean error, String message, int status) {
 }

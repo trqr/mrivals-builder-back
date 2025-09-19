@@ -6,6 +6,7 @@ import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.HeroDTOs.ListedH
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.LeaderboardPlayerDTOs.*;
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.MapDTOs.MapApiResponse;
 import com.mrivals_builder.Mrivals_Builder.dtos.ExternalApiDTOs.MapDTOs.MapExternalApiDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.MarvelRivalsAccountDTOs.AccountUpdateResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -150,12 +151,12 @@ public class ExternalApiService {
         return response.getBody();
     }
 
-    public String updatePlayerStats(String rivalsAccount){
+    public AccountUpdateResponseDTO updatePlayerStats(String rivalsAccount){
         String url = baseUrl + "/player/" + rivalsAccount + "/update";
         HttpHeaders headers = new HttpHeaders();
         headers.set("x-api-key", apiKey);
         HttpEntity<Void> entity = new HttpEntity<>(headers);
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+        ResponseEntity<AccountUpdateResponseDTO> response = restTemplate.exchange(url, HttpMethod.GET, entity, AccountUpdateResponseDTO.class);
         System.out.println(response.getBody());
         return response.getBody();
     }

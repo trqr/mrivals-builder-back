@@ -1,5 +1,9 @@
 package com.mrivals_builder.Mrivals_Builder.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mrivals_builder.Mrivals_Builder.dtos.MarvelRivalsAccountDTOs.AccountUpdateResponseDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.MarvelRivalsAccountDTOs.MarvelRivalsAccountDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.MarvelRivalsAccount;
 import com.mrivals_builder.Mrivals_Builder.entities.User;
@@ -9,8 +13,10 @@ import com.mrivals_builder.Mrivals_Builder.repositories.UserRepository;
 import com.mrivals_builder.Mrivals_Builder.security.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MarvelRivalsAccountService {
@@ -37,11 +43,29 @@ public class MarvelRivalsAccountService {
         return new MarvelRivalsAccountDTO(createdOrUpdated);
     }
 
-    public String updateAccounts() {
+    public AccountUpdateResponseDTO updateAccount(Long accountId) throws JsonProcessingException {
         User currentUser = getCurrentUser();
 
-        currentUser.getPlayerStats().forEach(account -> externalApiService.updatePlayerStats(account.getMrivalsAccount()));
-        return "Updated in the next 30 minutes.";
+        Optional<MarvelRivalsAccount> matchingAcc = currentUser.getPlayerStats().stream()
+                .filter(acc -> acc.getId().equals(accountId))
+                .findFirst();
+
+        if (matchingAcc.isEmpty()) {
+            return new AccountUpdateResponseDTO(true, "Account not found", 404);
+        }
+
+        try {
+            return externalApiService.updatePlayerStats(matchingAcc.get().getMrivalsAccount());
+        } catch (HttpClientErrorException e) {
+
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode node = mapper.readTree(e.getResponseBodyAsString());
+
+            String msg = node.has("message") ? node.get("message").asText() : e.getMessage();
+            int status = node.has("status") ? node.get("status").asInt() : e.getRawStatusCode();
+
+            return new AccountUpdateResponseDTO(false, msg, status);
+        }
     }
 
     public MarvelRivalsAccountDTO getUserAccount(Long id) {
