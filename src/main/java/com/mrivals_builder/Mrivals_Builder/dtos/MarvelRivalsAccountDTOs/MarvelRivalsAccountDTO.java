@@ -1,4 +1,4 @@
-package com.mrivals_builder.Mrivals_Builder.dtos;
+package com.mrivals_builder.Mrivals_Builder.dtos.MarvelRivalsAccountDTOs;
 
 import com.mrivals_builder.Mrivals_Builder.entities.MarvelRivalsAccount;
 import lombok.AllArgsConstructor;

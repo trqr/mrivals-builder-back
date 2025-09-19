@@ -8,8 +8,6 @@ public record RegisterRequestDTO(
         @NotBlank(message = "The username cannot be empty.")
         String username,
 
-        String mrivalsAccount,
-
         @NotBlank(message = "Email cannot be empty.")
         @Pattern(
                 regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$",

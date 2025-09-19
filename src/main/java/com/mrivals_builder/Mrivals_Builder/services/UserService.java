@@ -1,6 +1,6 @@
 package com.mrivals_builder.Mrivals_Builder.services;
 
-import com.mrivals_builder.Mrivals_Builder.dtos.MarvelRivalsAccountDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.MarvelRivalsAccountDTOs.MarvelRivalsAccountDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.UserDTOs.NewPasswordRequestDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.UserDTOs.UserDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.MarvelRivalsAccount;
@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 import java.util.List;
 
 @Service

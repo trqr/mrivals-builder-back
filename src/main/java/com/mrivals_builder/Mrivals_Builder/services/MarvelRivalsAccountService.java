@@ -1,6 +1,6 @@
 package com.mrivals_builder.Mrivals_Builder.services;
 
-import com.mrivals_builder.Mrivals_Builder.dtos.MarvelRivalsAccountDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.MarvelRivalsAccountDTOs.MarvelRivalsAccountDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.MarvelRivalsAccount;
 import com.mrivals_builder.Mrivals_Builder.entities.User;
 import com.mrivals_builder.Mrivals_Builder.exceptions.NotFoundException;

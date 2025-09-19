@@ -3,7 +3,6 @@ package com.mrivals_builder.Mrivals_Builder.services;
 import com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs.RegisterRequestDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs.RegisterResponseDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.UserDTOs.UserDTO;
-import com.mrivals_builder.Mrivals_Builder.entities.MarvelRivalsAccount;
 import com.mrivals_builder.Mrivals_Builder.entities.User;
 import com.mrivals_builder.Mrivals_Builder.exceptions.NotFoundException;
 import com.mrivals_builder.Mrivals_Builder.repositories.UserRepository;

@@ -1,6 +1,6 @@
 package com.mrivals_builder.Mrivals_Builder.dtos.UserDTOs;
 
-import com.mrivals_builder.Mrivals_Builder.dtos.MarvelRivalsAccountDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.MarvelRivalsAccountDTOs.MarvelRivalsAccountDTO;
 import com.mrivals_builder.Mrivals_Builder.entities.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,8 +23,11 @@ public class UserDTO {
         this.id = user.getId();
         this.username = user.getUsername();
         this.email = user.getEmail();
-        this.accounts = user.getPlayerStats().stream()
-                .map(account -> new MarvelRivalsAccountDTO(account)).toList();
+        this.accounts = user.getPlayerStats() != null
+                ? user.getPlayerStats().stream()
+                .map(MarvelRivalsAccountDTO::new)
+                .toList()
+                : List.of();
         this.role = user.getRole();
         this.banned = user.isBanned();
     }

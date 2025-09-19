@@ -1,7 +1,7 @@
 package com.mrivals_builder.Mrivals_Builder.controllers;
 
 import com.mrivals_builder.Mrivals_Builder.config.annotations.AdminOnly;
-import com.mrivals_builder.Mrivals_Builder.dtos.MarvelRivalsAccountDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.MarvelRivalsAccountDTOs.MarvelRivalsAccountDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.UserDTOs.NewPasswordRequestDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.UserDTOs.UserDTO;
 import com.mrivals_builder.Mrivals_Builder.services.UserService;
@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 @RestController

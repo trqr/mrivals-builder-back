@@ -1,6 +1,6 @@
 package com.mrivals_builder.Mrivals_Builder.controllers;
 
-import com.mrivals_builder.Mrivals_Builder.dtos.MarvelRivalsAccountDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.MarvelRivalsAccountDTOs.MarvelRivalsAccountDTO;
 import com.mrivals_builder.Mrivals_Builder.services.MarvelRivalsAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
