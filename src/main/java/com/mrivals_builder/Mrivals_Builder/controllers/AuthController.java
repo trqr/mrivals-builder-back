@@ -34,4 +34,17 @@ public class AuthController {
     public ResponseEntity<UserDTO> getCurrentUser(Principal principal){
         return new ResponseEntity<>(authService.getCurrentUser(principal), HttpStatus.OK);
     }
+
+    @PostMapping("/forgot-password")
+    public String forgotPassword(@RequestParam String email) {
+        authService.createPasswordResetToken(email);
+        return "Password reset link sent!";
+    }
+
+    @PostMapping("/reset-password")
+    public String resetPassword(@RequestParam String token,
+                                @RequestParam String newPassword) {
+        authService.resetPassword(token, newPassword);
+        return "Password reset successful!";
+    }
 }

@@ -854,7 +854,9 @@ INSERT INTO mrivals_builder_db.user (id, username, email, password, role, is_ban
 (1, 'White', 'killian@example.com', '$2a$10$A2r5X8ujFxLYRadoWzT/lO30ybr7UqeYmbOFCpjrYymXZmVbEdqr2', 'USER', false),
 (2, 'Trqr', 'tristan@example.com', '$2a$10$U/oTCNKnVY6EWY8925uhXOdtGpsHeUOZyEcRlwIxjVQBdVdjJggMy', 'ADMIN', false),
 (3, 'Yusuf', 'yusuf@example.com', '$2a$10$U/oTCNKnVY6EWY8925uhXOdtGpsHeUOZyEcRlwIxjVQBdVdjJggMy', 'USER', false),
-(4, 'Saïd', 'said@example.com', '$2a$10$U/oTCNKnVY6EWY8925uhXOdtGpsHeUOZyEcRlwIxjVQBdVdjJggMy', 'USER', true);
+(4, 'Saïd', 'said@example.com', '$2a$10$U/oTCNKnVY6EWY8925uhXOdtGpsHeUOZyEcRlwIxjVQBdVdjJggMy', 'USER', true),
+(5, 'Tristan', 'tristanqr@gmail.com', '$2a$10$U/oTCNKnVY6EWY8925uhXOdtGpsHeUOZyEcRlwIxjVQBdVdjJggMy', 'USER', false);
+
 
 
 insert into mrivals_builder_db.leaderboard_player (hero_assists, hero_deaths, hero_kills, hero_matches, hero_mvps, hero_svps, hero_wins, max_rank_score, rank_score, season_win_count, hero_id, id, icon, name)

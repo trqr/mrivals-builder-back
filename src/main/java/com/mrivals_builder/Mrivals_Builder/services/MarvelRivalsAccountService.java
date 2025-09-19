@@ -64,7 +64,7 @@ public class MarvelRivalsAccountService {
             String msg = node.has("message") ? node.get("message").asText() : e.getMessage();
             int status = node.has("status") ? node.get("status").asInt() : e.getRawStatusCode();
 
-            return new AccountUpdateResponseDTO(false, msg, status);
+            return new AccountUpdateResponseDTO(true, msg, status);
         }
     }
 
