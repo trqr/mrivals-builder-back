@@ -855,7 +855,9 @@ INSERT INTO mrivals_builder_db.user (id, username, email, password, role, is_ban
 (2, 'Trqr', 'tristan@example.com', '$2a$10$U/oTCNKnVY6EWY8925uhXOdtGpsHeUOZyEcRlwIxjVQBdVdjJggMy', 'ADMIN', false),
 (3, 'Yusuf', 'yusuf@example.com', '$2a$10$U/oTCNKnVY6EWY8925uhXOdtGpsHeUOZyEcRlwIxjVQBdVdjJggMy', 'USER', false),
 (4, 'Saïd', 'said@example.com', '$2a$10$U/oTCNKnVY6EWY8925uhXOdtGpsHeUOZyEcRlwIxjVQBdVdjJggMy', 'USER', true),
-(5, 'Tristan', 'tristanqr@gmail.com', '$2a$10$U/oTCNKnVY6EWY8925uhXOdtGpsHeUOZyEcRlwIxjVQBdVdjJggMy', 'USER', false);
+(5, 'Tristan', 'tristanqr@gmail.com', '$2a$10$U/oTCNKnVY6EWY8925uhXOdtGpsHeUOZyEcRlwIxjVQBdVdjJggMy', 'USER', false),
+(6, 'Killian', 'killian.bastardy@gmail.com', '$2a$10$A2r5X8ujFxLYRadoWzT/lO30ybr7UqeYmbOFCpjrYymXZmVbEdqr2', 'ADMIN', false);
+
 
 
 

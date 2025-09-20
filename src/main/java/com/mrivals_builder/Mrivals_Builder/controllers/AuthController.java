@@ -3,6 +3,7 @@ package com.mrivals_builder.Mrivals_Builder.controllers;
 import com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs.LoginRequestDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs.RegisterRequestDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs.RegisterResponseDTO;
+import com.mrivals_builder.Mrivals_Builder.dtos.AuthDTOs.ResetPasswordRequestDTO;
 import com.mrivals_builder.Mrivals_Builder.dtos.UserDTOs.UserDTO;
 import com.mrivals_builder.Mrivals_Builder.services.AuthService;
 import jakarta.validation.Valid;
@@ -42,9 +43,8 @@ public class AuthController {
     }
 
     @PostMapping("/reset-password")
-    public String resetPassword(@RequestParam String token,
-                                @RequestParam String newPassword) {
-        authService.resetPassword(token, newPassword);
+    public String resetPassword(@Valid @RequestBody ResetPasswordRequestDTO requestDTO) {
+        authService.resetPassword(requestDTO.token(), requestDTO.password());
         return "Password reset successful!";
     }
 }
