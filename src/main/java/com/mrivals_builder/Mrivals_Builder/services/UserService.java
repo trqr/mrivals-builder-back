@@ -97,4 +97,13 @@ public class UserService {
         userRepository.saveAll(users);
         return users.stream().map(user -> new UserDTO(user)).toList();
     }
+
+    public List<UserDTO> unBanUsers(List<Long> ids){
+        List<User> users = userRepository.findAllById(ids);
+
+        users.forEach(user -> user.setBanned(false));
+
+        userRepository.saveAll(users);
+        return users.stream().map(user -> new UserDTO(user)).toList();
+    }
 }

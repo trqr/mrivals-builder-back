@@ -45,6 +45,12 @@ public class UserController {
         return new ResponseEntity<>(userService.banUsers(ids), HttpStatus.OK);
     }
 
+    @PutMapping("/unban")
+    @AdminOnly
+    public ResponseEntity<List<UserDTO>> unBanUsers(@RequestBody List<Long> ids){
+        return new ResponseEntity<>(userService.unBanUsers(ids), HttpStatus.OK);
+    }
+
     @PatchMapping("/mr-account/{accountId}")
     public ResponseEntity<MarvelRivalsAccountDTO> changeMRAccount(@PathVariable Long accountId, @RequestParam String accountName){
         return new ResponseEntity<>(userService.changeMRAccount(accountId, accountName), HttpStatus.OK);

@@ -1,5 +1,10 @@
 package com.mrivals_builder.Mrivals_Builder.security;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
+import com.mrivals_builder.Mrivals_Builder.entities.User;
+import com.mrivals_builder.Mrivals_Builder.exceptions.BadRequestException;
+import com.mrivals_builder.Mrivals_Builder.exceptions.NotFoundException;
+import com.mrivals_builder.Mrivals_Builder.repositories.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,6 +26,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtils jwtUtils;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -41,7 +49,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             UsernamePasswordAuthenticationToken auth =
                     new UsernamePasswordAuthenticationToken(email, null, authorities);
 
-            // Enregistre cette authentification dans le contexte de sécurité
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
 
