@@ -24,10 +24,10 @@ public class AIService {
                 "model", "mistral-7b-instruct-v0.2.Q4_K_M",
                 "messages", List.of(
                         Map.of("role", "user", "content",
-                                "You are an expert at Marvel Rivals for team composition. 50 words max in two blocks: one for advantages and one for weaknesses. Analyze the potential synergies and weaknesses of this composition. " + prompt)
+                                "You are an expert at Marvel Rivals for team composition. 50 words max in two blocks: one for advantages and one for weaknesses." + prompt)
                 ),
                 "max_tokens", 500,
-                "temperature", 0.7,
+                "temperature", 0.5,
                 "stream", true
         );
 
