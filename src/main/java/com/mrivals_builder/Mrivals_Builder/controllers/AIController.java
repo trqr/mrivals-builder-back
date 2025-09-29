@@ -15,8 +15,8 @@ public class AIController {
         this.aiService = aiService;
     }
 
-    @PostMapping(value = "/marvel-compo", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<String> getMarvelCompo(@RequestBody String prompt) {
+    @PostMapping("/marvel-compo")
+    public String getMarvelCompo(@RequestBody String prompt) {
         return aiService.askMarvelCompo(prompt);
     }
 }
