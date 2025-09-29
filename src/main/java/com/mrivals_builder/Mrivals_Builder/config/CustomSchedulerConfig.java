@@ -4,11 +4,11 @@ import com.mrivals_builder.Mrivals_Builder.services.HeroService;
 import com.mrivals_builder.Mrivals_Builder.services.LeaderboardService;
 import com.mrivals_builder.Mrivals_Builder.services.MapService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
-@Component
-public class TaskScheduler {
+@Configuration
+public class CustomSchedulerConfig {
 
     @Autowired
     private HeroService heroService;
