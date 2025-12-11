@@ -11,18 +11,18 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import javax.sql.DataSource;
 
-@Configuration
-public class DataInitializer implements ApplicationListener<ContextRefreshedEvent> {
-    @Autowired
-    private DataSource dataSource;
+//@Configuration
+//public class DataInitializer implements ApplicationListener<ContextRefreshedEvent> {
+  //  @Autowired
+  //  private DataSource dataSource;
 
-    @Override
-    public void onApplicationEvent(ContextRefreshedEvent event) {
-        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-        populator.addScript(new ClassPathResource("data.sql"));
-        populator.execute(dataSource);
-    }
-}
+  //  @Override
+   // public void onApplicationEvent(ContextRefreshedEvent event) {
+    //    ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+    //    populator.addScript(new ClassPathResource("data.sql"));
+   //     populator.execute(dataSource);
+    // }
+//}
 
 
 
