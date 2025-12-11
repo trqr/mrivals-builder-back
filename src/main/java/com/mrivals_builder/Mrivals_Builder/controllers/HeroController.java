@@ -23,6 +23,11 @@ public class HeroController {
         return new ResponseEntity<>(heroService.getOrUpdateAllHeroData(), HttpStatus.OK);
     }
 
+    @GetMapping("/update/stats")
+    public ResponseEntity<List<HeroDTO>> updateAllHeroStats(){
+        return new ResponseEntity<>(heroService.updateAllHeroStats(), HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity<List<HeroDTO>> getAllHeroes(){
         return new ResponseEntity<>(heroService.getAllHeroes(), HttpStatus.OK);

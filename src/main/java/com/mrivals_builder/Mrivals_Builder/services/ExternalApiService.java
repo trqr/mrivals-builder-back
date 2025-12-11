@@ -58,13 +58,22 @@ public class ExternalApiService {
 
         HttpEntity<Void> entity = new HttpEntity<>(headers);
 
-        ResponseEntity<HeroExternalApiDTO> response = restTemplate.exchange(
-                url,
-                HttpMethod.GET,
-                entity,
-                HeroExternalApiDTO.class
-        );
-        return response.getBody();
+        int retries = 0;
+        while (true) {
+            try {
+                ResponseEntity<HeroExternalApiDTO> response = restTemplate.exchange(
+                        url, HttpMethod.GET, entity, HeroExternalApiDTO.class);
+                return response.getBody();
+            } catch (HttpClientErrorException.TooManyRequests e) {
+                retries++;
+                if (retries > 5) throw e;
+                try {
+                    Thread.sleep(2000 * retries);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        }
     }
 
     public HeroStatsExternalApiDTO getHeroStatsFromApi(Long heroId) {
@@ -83,7 +92,7 @@ public class ExternalApiService {
                 retries++;
                 if (retries > 5) throw e;
                 try {
-                    Thread.sleep(1000 * retries);
+                    Thread.sleep(2000 * retries);
                 } catch (InterruptedException ie) {
                     Thread.currentThread().interrupt();
                 }
