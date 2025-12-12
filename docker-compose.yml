@@ -18,6 +18,8 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: mrivals-api
+    expose:
+      - "8080"   # 🔥 obligatoire pour Traefik
     restart: always
     depends_on:
       - mysql
