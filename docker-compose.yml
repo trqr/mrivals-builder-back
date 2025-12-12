@@ -8,12 +8,10 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: mrivals_builder_db
-    ports:
-      - "3310:3306"
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
-      - mrivals_network
+      - traefik-network
 
   mrivals-api:
     build:
@@ -23,6 +21,7 @@ services:
     restart: always
     depends_on:
       - mysql
+
     environment:
       SPRING_DATASOURCE_URL: ${DB_URL}
       SPRING_DATASOURCE_USERNAME: root
@@ -37,14 +36,28 @@ services:
 
       AI_BASE_URL: ${AI_BASE_URL}
       AI_PRIVATE_KEY: ${AI_PRIVATE_KEY}
-    ports:
-      - "9092:8080"
+
+    labels:
+      - "traefik.enable=true"
+
+      # ROUTEUR API : https://mrivals-builder.com/api/...
+      - "traefik.http.routers.mrivals-api.rule=Host(`mrivals-builder.com`, `www.mrivals-builder.com`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.mrivals-api.entrypoints=websecure"
+      - "traefik.http.routers.mrivals-api.tls.certresolver=le"
+
+      # Enlever /api pour Spring Boot
+      - "traefik.http.middlewares.mrivals-strip-api.stripprefix.prefixes=/api"
+      - "traefik.http.routers.mrivals-api.middlewares=mrivals-strip-api@docker"
+
+      # Service (port interne Spring)
+      - "traefik.http.services.mrivals-api.loadbalancer.server.port=8080"
+
     networks:
-      - mrivals_network
+      - traefik-network
 
 volumes:
   mysql_data:
 
 networks:
-  mrivals_network:
+  traefik-network:
     external: true
