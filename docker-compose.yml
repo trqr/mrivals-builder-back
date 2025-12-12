@@ -44,6 +44,8 @@ services:
       - "traefik.http.routers.mrivals-api.rule=Host(`mrivals-builder.com`, `www.mrivals-builder.com`) && PathPrefix(`/api`)"
       - "traefik.http.routers.mrivals-api.entrypoints=websecure"
       - "traefik.http.routers.mrivals-api.tls.certresolver=le"
+      - "traefik.http.routers.mrivals-front.tls=true"
+
 
       # Enlever /api pour Spring Boot
       - "traefik.http.middlewares.mrivals-strip-api.stripprefix.prefixes=/api"
