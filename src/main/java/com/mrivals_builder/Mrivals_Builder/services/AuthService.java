@@ -79,7 +79,7 @@ public class AuthService {
 
         tokenRepository.save(resetToken);
 
-        String resetLink = "http://localhost:5173/reset-password?token=" + token;
+        String resetLink = "http://mrivals-builder.com/reset-password?token=" + token;
         emailService.sendEmail(email, "Password Reset Request",
                 "Click here to reset your password: " + resetLink);
     }
