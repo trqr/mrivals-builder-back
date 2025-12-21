@@ -43,7 +43,7 @@ services:
       - "traefik.enable=true"
 
       # ROUTEUR API : https://mrivals-builder.com/api/...
-      - "traefik.http.routers.mrivals-api.rule=Host(`mrivals-builder.com`, `www.mrivals-builder.com`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.mrivals-api.rule=Host(`mrivals-builder.com`, `www.mrivals-builder.com`, `mrivals.trqr.fr`) && PathPrefix(`/api`)"
       - "traefik.http.routers.mrivals-api.entrypoints=websecure"
       - "traefik.http.routers.mrivals-api.tls.certresolver=le"
       - "traefik.http.routers.mrivals-api.tls=true"
